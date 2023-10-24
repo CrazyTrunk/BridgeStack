@@ -1,9 +1,10 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.EnhancedTouch;
 using ETouch = UnityEngine.InputSystem.EnhancedTouch;
-public class InputManager : MonoBehaviour
+public class InputManager : Singleton<InputManager>
 {
     [SerializeField] private Vector2 joyStickSize = new Vector2(250, 250);
     [SerializeField] private JoyStick joyStick;

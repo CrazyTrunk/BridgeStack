@@ -27,6 +27,7 @@ public class Player : Character
     {
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
+        inputManager = InputManager.Instance;
         rb = transform.GetComponent<Rigidbody>();
         playerHeight = collider.height;
     }
