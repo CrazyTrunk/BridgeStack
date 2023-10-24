@@ -63,7 +63,7 @@ public class InputManager : MonoBehaviour
 
     private void HandleFingerDown(Finger finger)
     {
-        //neu ngon tay di chuyen nua man hinh
+        //neu ngon tay di chuyen nua man hinh+
         if (movementFinger == null && finger.screenPosition.x <= Screen.width)
         {
             movementFinger = finger;
