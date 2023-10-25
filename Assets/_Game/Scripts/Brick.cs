@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour
 {
-    public string colorName;
+    public GameColor colorName;
+    public Color color;
     public int brickNumber;
 }

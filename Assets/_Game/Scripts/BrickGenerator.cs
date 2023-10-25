@@ -54,6 +54,7 @@ public class BrickGenerator : MonoBehaviour
         createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
         createdBrick.GetComponent<Brick>().colorName = colorDataSO.ColorDatas[randomColor].colorName;
         createdBrick.GetComponent<Brick>().brickNumber = i;
+        createdBrick.GetComponent<Brick>().color = colorDataSO.ColorDatas[randomColor].color;
         InsertBrickSpawnDataToList(colorDataSO.ColorDatas[randomColor].color, colorDataSO.ColorDatas[randomColor].colorName, createdBrick);
     }
     public void MakeRemovedBrick(int brickNumber)
@@ -61,7 +62,7 @@ public class BrickGenerator : MonoBehaviour
         brickSpawnSO.BrickSpawnDatas[brickNumber].removed = true;
     }
 
-    private void InsertBrickSpawnDataToList(Color color, string colorName, Transform createdBrick)
+    private void InsertBrickSpawnDataToList(Color color, GameColor colorName, Transform createdBrick)
     {
         BrickSpawnData newBrickData = new()
         {

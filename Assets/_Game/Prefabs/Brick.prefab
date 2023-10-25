@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3959041192725110469}
   m_Layer: 0
   m_Name: Brick
-  m_TagString: Untagged
+  m_TagString: Brick
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -53,8 +53,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 0.33425492, z: 1}
-  m_Center: {x: 0, y: 0.055561636, z: 0}
+  m_Size: {x: 0.55563927, y: 0.08321381, z: 0.29521674}
+  m_Center: {x: 0.023283005, y: -0.0024671815, z: -0.000070124865}
 --- !u!114 &3959041192725110469
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54ff6fd5e52f1d6418fe51810b2442d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  colorName: 
+  colorName: 0
+  color: {r: 0, g: 0, b: 0, a: 0}
   brickNumber: 0
 --- !u!1 &6590510467103577893
 GameObject:

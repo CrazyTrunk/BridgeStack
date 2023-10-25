@@ -1,12 +1,11 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : Character
 {
-    float speed = 5f;
-    [SerializeField] private InputManager inputManager;
+    [SerializeField] float speed = 5f;
+    private InputManager inputManager;
     [SerializeField] private Animator animator;
     private string CurrentAnim;
     [Header("Ground Detetion")]
@@ -23,6 +22,18 @@ public class Player : Character
     Vector3 slopeMovement;
     Vector3 moveMovement;
 
+    GameColor playerColorName;
+    [Header("SO")]
+    [SerializeField] public ColorDataSO colorDataSO;
+
+    [Header("Brick Holder and Placer")]
+    [SerializeField] public Transform brickHolder;
+    [SerializeField] private Transform brickPrefab;
+    [SerializeField] private Transform brickPlacer;
+    float movementMultiplier = 20f;
+    [SerializeField] float airMultiplier = 0.4f;
+
+    float totalBrick = 0;
     private void Start()
     {
         ChangeAnim("idle");
@@ -30,6 +41,7 @@ public class Player : Character
         inputManager = InputManager.Instance;
         rb = transform.GetComponent<Rigidbody>();
         playerHeight = collider.height;
+        RandomColorPlayer();
     }
     private void Update()
 
@@ -44,10 +56,6 @@ public class Player : Character
         }
         else
         {
-            if (OnSlope())
-            {
-                rb.AddForce(-slopeHit.normal * Mathf.Abs(Physics.gravity.y) * rb.mass);
-            }
             ChangeAnim("idle");
         }
         slopeMovement = Vector3.ProjectOnPlane(moveMovement, slopeHit.normal);
@@ -68,17 +76,19 @@ public class Player : Character
     {
         if (isGround && !OnSlope())
         {
-            rb.AddForce(moveMovement.normalized * 10f, ForceMode.Acceleration);
+            Debug.Log("not on slope");
+
+            rb.AddForce(moveMovement.normalized  *movementMultiplier, ForceMode.Acceleration);
 
         }
         else if (isGround && OnSlope())
         {
-            rb.AddForce(slopeMovement.normalized * 10f, ForceMode.Acceleration);
-
+            Debug.Log("OnSLope");
+            rb.AddForce(slopeMovement.normalized  * movementMultiplier, ForceMode.Acceleration);
         }
         else if (!isGround)
         {
-            rb.AddForce(moveMovement.normalized * 10f, ForceMode.Acceleration);
+            rb.AddForce(moveMovement.normalized  *movementMultiplier * airMultiplier, ForceMode.Acceleration);
         }
         transform.transform.LookAt(transform.position + scaledMovement, Vector3.up);
         ChangeAnim("run");
@@ -107,5 +117,42 @@ public class Player : Character
             }
         }
         return false;
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        Brick brick = other.transform.GetComponent<Brick>();
+
+        if (other.CompareTag(Tag.Brick))
+        {
+            if (brick.colorName == playerColorName)
+            {
+                Destroy(other.gameObject);
+                UpdatePlayerBrick(brick.color);
+            }
+        }
+    }
+    private void UpdatePlayerBrick(Color brickcolor)
+    {
+        Transform brick = Instantiate(brickPrefab, brickHolder);
+        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
+        brick.localPosition = brickPosition;
+        brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
+        totalBrick++;
+
+    }
+    private void RandomColorPlayer()
+    {
+        int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
+        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
+        playerColorName = colorDataSO.ColorDatas[randomColor].colorName;
+
+    }
+    private void CheckBridge()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(brickPlacer.position, Vector3.down, out hit, Mathf.Infinity))
+        {
+            Debug.Log("Hit");
+        }
     }
 }
