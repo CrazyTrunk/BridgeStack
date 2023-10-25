@@ -68,14 +68,11 @@ public class Player : Character
     {
         if (isGround && !OnSlope())
         {
-            Debug.Log($"moveMovement.normalized {moveMovement.normalized}");
             rb.AddForce(moveMovement.normalized * 10f, ForceMode.Acceleration);
 
         }
         else if (isGround && OnSlope())
         {
-            Debug.Log($"slopeMovement.normalized {slopeMovement.normalized}");
-
             rb.AddForce(slopeMovement.normalized * 10f, ForceMode.Acceleration);
 
         }

@@ -20,5 +20,6 @@ public class LevelButton : MonoBehaviour
             GameObject currentPlayer = Instantiate(player);
             currentPlayer.transform.position = spawnPoint.position;
         }
+        CameraFollow.Instance.Init();
     }
 }

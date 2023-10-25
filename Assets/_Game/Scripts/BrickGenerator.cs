@@ -1,7 +1,5 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class BrickGenerator : MonoBehaviour
 {
@@ -22,6 +20,7 @@ public class BrickGenerator : MonoBehaviour
         position = transform.position;
         zPosInit = position.z;
         xPosInit = position.x;
+        brickSpawnSO.BrickSpawnDatas = new List<BrickSpawnData>();
         SpawnBricks();
     }
     private void SpawnBricks()
@@ -31,7 +30,7 @@ public class BrickGenerator : MonoBehaviour
         for (int i = 0; i < length; i++)
         {
             // Instantiate the brick at the current position
-           Transform createdBrick = Instantiate(BrickPrefab, currentPos, BrickPrefab.transform.rotation, transform);
+            Transform createdBrick = Instantiate(BrickPrefab, currentPos, BrickPrefab.transform.rotation, transform);
 
             // Update x position or reset for a new row
             if ((i + 1) % line == 0)
@@ -43,6 +42,34 @@ public class BrickGenerator : MonoBehaviour
             {
                 currentPos.x += step;
             }
+            GiveColorBrick(createdBrick, i);
+
         }
+    }
+
+    private void GiveColorBrick(Transform createdBrick, int i)
+    {
+        int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
+        //_Color Shader Color Properties
+        createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
+        createdBrick.GetComponent<Brick>().colorName = colorDataSO.ColorDatas[randomColor].colorName;
+        createdBrick.GetComponent<Brick>().brickNumber = i;
+        InsertBrickSpawnDataToList(colorDataSO.ColorDatas[randomColor].color, colorDataSO.ColorDatas[randomColor].colorName, createdBrick);
+    }
+    public void MakeRemovedBrick(int brickNumber)
+    {
+        brickSpawnSO.BrickSpawnDatas[brickNumber].removed = true;
+    }
+
+    private void InsertBrickSpawnDataToList(Color color, string colorName, Transform createdBrick)
+    {
+        BrickSpawnData newBrickData = new()
+        {
+            color = color,
+            colorName = colorName,
+            position = createdBrick.position,
+            removed = false
+        };
+        brickSpawnSO.BrickSpawnDatas.Add(newBrickData);
     }
 }
