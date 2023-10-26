@@ -13,13 +13,8 @@ public class Player : Character
     bool isGround;
     float radius = 0.5f;
     private float playerHeight;
-    [Header("Drag")]
-    [SerializeField] float groundDrag = 6f;
-    [SerializeField] float airDrag = 1f;
 
     Rigidbody rb;
-    RaycastHit slopeHit;
-    Vector3 slopeMovement;
     Vector3 moveMovement;
 
     GameColor playerColorName;
@@ -34,6 +29,13 @@ public class Player : Character
     [SerializeField] float airMultiplier = 0.4f;
 
     float totalBrick = 0;
+
+    [Header("Slope")]
+
+    [SerializeField] private float slopeForce;
+    [SerializeField] private float slopeForceRayLength;
+
+
     private void Start()
     {
         ChangeAnim("idle");
@@ -44,55 +46,43 @@ public class Player : Character
         RandomColorPlayer();
     }
     private void Update()
-
     {
         isGround = Physics.CheckSphere(transform.position, radius, groundMask);
+        MovePlayer();
+    }
+    private bool OnSlope()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight / 2 * slopeForceRayLength))
+        {
+            if (hit.normal != Vector3.up)
+            {
+                Debug.Log("Hit");
+                return true;
+            }
+        }
+        return false;
+    }
+    private void MovePlayer()
+    {
         moveMovement = speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
-        ControlDrag();
         if (moveMovement.magnitude > 0)
         {
+            Vector3 lookDirection = new Vector3(moveMovement.x, 0, moveMovement.z);
 
-            MovePlayer(moveMovement);
+            if (OnSlope())
+            {
+                moveMovement += Vector3.down * playerHeight / 2 * slopeForce * Time.deltaTime;
+
+            }
+            transform.position += moveMovement;
+            transform.forward = lookDirection.normalized;
+            ChangeAnim("run");
         }
         else
         {
             ChangeAnim("idle");
         }
-        slopeMovement = Vector3.ProjectOnPlane(moveMovement, slopeHit.normal);
-
-    }
-    void ControlDrag()
-    {
-        if (isGround)
-        {
-            rb.drag = groundDrag;
-        }
-        else
-        {
-            rb.drag = airDrag;
-        }
-    }
-    private void MovePlayer(Vector3 scaledMovement)
-    {
-        if (isGround && !OnSlope())
-        {
-            Debug.Log("not on slope");
-
-            rb.AddForce(moveMovement.normalized  *movementMultiplier, ForceMode.Acceleration);
-
-        }
-        else if (isGround && OnSlope())
-        {
-            Debug.Log("OnSLope");
-            rb.AddForce(slopeMovement.normalized  * movementMultiplier, ForceMode.Acceleration);
-        }
-        else if (!isGround)
-        {
-            rb.AddForce(moveMovement.normalized  *movementMultiplier * airMultiplier, ForceMode.Acceleration);
-        }
-        transform.transform.LookAt(transform.position + scaledMovement, Vector3.up);
-        ChangeAnim("run");
-
     }
     protected void ChangeAnim(string animName)
     {
@@ -102,21 +92,6 @@ public class Player : Character
             CurrentAnim = animName;
             animator.SetTrigger(CurrentAnim);
         }
-    }
-    private bool OnSlope()
-    {
-        if (Physics.Raycast(transform.position, Vector3.down, out slopeHit, playerHeight / 2 + 0.5f))
-        {
-            if (slopeHit.normal != Vector3.up)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        return false;
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -146,13 +121,5 @@ public class Player : Character
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
         playerColorName = colorDataSO.ColorDatas[randomColor].colorName;
 
-    }
-    private void CheckBridge()
-    {
-        RaycastHit hit;
-        if (Physics.Raycast(brickPlacer.position, Vector3.down, out hit, Mathf.Infinity))
-        {
-            Debug.Log("Hit");
-        }
     }
 }

@@ -7,6 +7,7 @@ public class CameraFollow : Singleton<CameraFollow>
     Transform target;
     public Vector3 offset;
     public float Speed = 20;
+    public Vector3 velocity = Vector3.zero;
 
     public void Init()
     {
@@ -21,12 +22,8 @@ public class CameraFollow : Singleton<CameraFollow>
         }
     }
 
-    void FixedUpdate()
+    void LateUpdate()
     {
-        if (target == null)
-        {
-            return;
-        }
-        transform.position = Vector3.Lerp(transform.position, target.position + offset, Time.deltaTime * Speed);
+        transform.position = Vector3.SmoothDamp(transform.position, target.position + offset, ref velocity,0.1f);
     }
 }
