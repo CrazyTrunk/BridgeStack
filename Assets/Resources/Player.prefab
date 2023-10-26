@@ -221,9 +221,11 @@ MonoBehaviour:
   brickHolder: {fileID: 2590854001173672771}
   brickPrefab: {fileID: 4857897480042355356, guid: 9f9761143a631e940992107a15b0598d, type: 3}
   brickPlacer: {fileID: 1886019923331469558}
-  airMultiplier: 0.4
   slopeForce: 4
   slopeForceRayLength: 1.5
+  stairLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &7822602780626148780
 GameObject:
   m_ObjectHideFlags: 0
@@ -249,9 +251,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7822602780626148780}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.17671424, y: 0.393, z: 0.03}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.804, z: 0.341}
+  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 4910020533524153206}
@@ -271,12 +273,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.28373882, y: 0.25393707, z: 0.25505316}
-  m_Center: {x: 0.23844461, y: 0.37303147, z: 0.37247342}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1224563680966878498
 PrefabInstance:
   m_ObjectHideFlags: 0

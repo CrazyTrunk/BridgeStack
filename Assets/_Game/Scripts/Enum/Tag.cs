@@ -6,5 +6,7 @@ using System.Threading.Tasks;
 
 public class Tag
 {
-    public const string Brick = "Brick";
+    public const string BRICK = "Brick";
+    public const string STAIR_BRICK = "StairBrick";
+
 }

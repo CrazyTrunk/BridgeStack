@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 public enum GameColor
 {
+    NoColor,
     Red,
     Green,
     Blue,

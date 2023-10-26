@@ -14,7 +14,6 @@ public class Player : Character
     float radius = 0.5f;
     private float playerHeight;
 
-    Rigidbody rb;
     Vector3 moveMovement;
 
     GameColor playerColorName;
@@ -25,15 +24,15 @@ public class Player : Character
     [SerializeField] public Transform brickHolder;
     [SerializeField] private Transform brickPrefab;
     [SerializeField] private Transform brickPlacer;
-    float movementMultiplier = 20f;
-    [SerializeField] float airMultiplier = 0.4f;
 
     float totalBrick = 0;
-
     [Header("Slope")]
 
     [SerializeField] private float slopeForce;
     [SerializeField] private float slopeForceRayLength;
+
+    [Header("Stair Brick")]
+    [SerializeField] private LayerMask stairLayer;
 
 
     private void Start()
@@ -41,13 +40,13 @@ public class Player : Character
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
-        rb = transform.GetComponent<Rigidbody>();
         playerHeight = collider.height;
         RandomColorPlayer();
     }
     private void Update()
     {
         isGround = Physics.CheckSphere(transform.position, radius, groundMask);
+        var move = CheckBridgeStair();
         MovePlayer();
     }
     private bool OnSlope()
@@ -57,26 +56,58 @@ public class Player : Character
         {
             if (hit.normal != Vector3.up)
             {
-                Debug.Log("Hit");
                 return true;
             }
         }
         return false;
     }
+    private bool CheckBridgeStair()
+    {
+        RaycastHit hit;
+        Debug.DrawRay(brickPlacer.position, Vector3.down, Color.red, 10f);
+
+        if (Physics.Raycast(brickPlacer.position + Vector3.up * 2f, Vector3.down, out hit, Mathf.Infinity, stairLayer))
+        {
+            StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
+            if (brick.colorName == GameColor.NoColor)
+            {
+                if (totalBrick > 0)
+                {
+                    ColorData currentPlayerColorData = FindColorDataByGameColor(playerColorName);
+                    brick.brickRenderer.material.color = currentPlayerColorData.color;
+                    brick.colorName = currentPlayerColorData.colorName;
+                    brick.color = currentPlayerColorData.color;
+                    brick.brickRenderer.enabled = true;
+                    totalBrick--;
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+
     private void MovePlayer()
     {
+        if (!CheckBridgeStair())
+            return;
+
         moveMovement = speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
         if (moveMovement.magnitude > 0)
         {
             Vector3 lookDirection = new Vector3(moveMovement.x, 0, moveMovement.z);
-
             if (OnSlope())
             {
                 moveMovement += Vector3.down * playerHeight / 2 * slopeForce * Time.deltaTime;
-
             }
+
             transform.position += moveMovement;
             transform.forward = lookDirection.normalized;
+
             ChangeAnim("run");
         }
         else
@@ -97,13 +128,11 @@ public class Player : Character
     {
         Brick brick = other.transform.GetComponent<Brick>();
 
-        if (other.CompareTag(Tag.Brick))
+        if (other.CompareTag(Tag.BRICK))
         {
-            if (brick.colorName == playerColorName)
-            {
-                Destroy(other.gameObject);
-                UpdatePlayerBrick(brick.color);
-            }
+
+            Destroy(other.gameObject);
+            UpdatePlayerBrick(brick.color);
         }
     }
     private void UpdatePlayerBrick(Color brickcolor)
@@ -113,7 +142,7 @@ public class Player : Character
         brick.localPosition = brickPosition;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
         totalBrick++;
-
+        Debug.Log($"totalBrick ++ {totalBrick}");
     }
     private void RandomColorPlayer()
     {
@@ -121,5 +150,17 @@ public class Player : Character
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
         playerColorName = colorDataSO.ColorDatas[randomColor].colorName;
 
+    }
+
+    public ColorData FindColorDataByGameColor(GameColor targetColor)
+    {
+        foreach (ColorData data in colorDataSO.ColorDatas)
+        {
+            if (data.colorName == targetColor)
+            {
+                return data;
+            }
+        }
+        return null;
     }
 }
