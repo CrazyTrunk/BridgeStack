@@ -46,7 +46,6 @@ public class Player : Character
     private void Update()
     {
         isGround = Physics.CheckSphere(transform.position, radius, groundMask);
-        var move = CheckBridgeStair();
         MovePlayer();
     }
     private bool OnSlope()
@@ -63,29 +62,24 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
+        if (inputManager.MovementAmount.y <= 0)
+            return true;
         RaycastHit hit;
-        Debug.DrawRay(brickPlacer.position, Vector3.down, Color.red, 10f);
-
         if (Physics.Raycast(brickPlacer.position + Vector3.up * 2f, Vector3.down, out hit, Mathf.Infinity, stairLayer))
         {
             StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
-            if (brick.colorName == GameColor.NoColor)
+            if (totalBrick > 0 && brick.colorName == GameColor.NoColor)
             {
-                if (totalBrick > 0)
-                {
-                    ColorData currentPlayerColorData = FindColorDataByGameColor(playerColorName);
-                    brick.brickRenderer.material.color = currentPlayerColorData.color;
-                    brick.colorName = currentPlayerColorData.colorName;
-                    brick.color = currentPlayerColorData.color;
-                    brick.brickRenderer.enabled = true;
-                    totalBrick--;
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
+                ColorData currentPlayerColorData = FindColorDataByGameColor(playerColorName);
+                brick.brickRenderer.material.color = currentPlayerColorData.color;
+                brick.colorName = currentPlayerColorData.colorName;
+                brick.color = currentPlayerColorData.color;
+                brick.brickRenderer.enabled = true;
+                totalBrick--;
+                return true;
             }
+            if (brick.colorName == GameColor.NoColor && totalBrick == 0)
+                return false;
         }
         return true;
     }
