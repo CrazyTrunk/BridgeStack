@@ -217,7 +217,9 @@ MonoBehaviour:
   groundMask:
     serializedVersion: 2
     m_Bits: 8
+  playerHeight: 0
   colorDataSO: {fileID: 11400000, guid: 97e46857577e4644ba6327bf2e877421, type: 2}
+  playerDataSO: {fileID: 11400000, guid: b82bba004ff971b47ba65f201988e407, type: 2}
   brickHolder: {fileID: 2590854001173672771}
   brickPrefab: {fileID: 4857897480042355356, guid: 9f9761143a631e940992107a15b0598d, type: 3}
   brickPlacer: {fileID: 1886019923331469558}

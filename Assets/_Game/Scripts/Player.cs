@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Player : Character
@@ -10,15 +11,15 @@ public class Player : Character
     private string CurrentAnim;
     [Header("Ground Detetion")]
     [SerializeField] LayerMask groundMask;
-    bool isGround;
-    float radius = 0.5f;
-    private float playerHeight;
+    //bool isGround;
+    //float radius = 0.5f;
+    public float playerHeight;
 
     Vector3 moveMovement;
 
-    GameColor playerColorName;
     [Header("SO")]
-    [SerializeField] public ColorDataSO colorDataSO;
+    [SerializeField] private ColorDataSO colorDataSO;
+    [SerializeField] private PlayerDataSO playerDataSO;
 
     [Header("Brick Holder and Placer")]
     [SerializeField] public Transform brickHolder;
@@ -33,19 +34,24 @@ public class Player : Character
 
     [Header("Stair Brick")]
     [SerializeField] private LayerMask stairLayer;
-    private BrickGenerator[] brickGenerators;
-
+    [SerializeField] BrickGenerator[] BrickGenerators;
     private void Start()
+    {
+        OnInit();
+        RandomColorPlayer();
+    }
+    public void OnInit()
     {
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
         playerHeight = collider.height;
-        RandomColorPlayer();
+        BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
+        BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
     }
     private void Update()
     {
-        isGround = Physics.CheckSphere(transform.position, radius, groundMask);
+        //isGround = Physics.CheckSphere(transform.position, radius, groundMask);
         MovePlayer();
     }
     private bool OnSlope()
@@ -62,6 +68,10 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
+        if(totalBrick == 0)
+        {
+            RegenerateBrick(playerDataSO.PlayerData.Zone);  
+        }
         if (inputManager.MovementAmount.y <= 0)
             return true;
         RaycastHit hit;
@@ -70,7 +80,7 @@ public class Player : Character
             StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
             if (totalBrick > 0 && brick.colorName == GameColor.NoColor)
             {
-                ColorData currentPlayerColorData = FindColorDataByGameColor(playerColorName);
+                ColorData currentPlayerColorData = FindColorDataByGameColor(playerDataSO.PlayerData.playerColor);
                 brick.brickRenderer.material.color = currentPlayerColorData.color;
                 brick.colorName = currentPlayerColorData.colorName;
                 brick.color = currentPlayerColorData.color;
@@ -79,9 +89,17 @@ public class Player : Character
                 return true;
             }
             if (brick.colorName == GameColor.NoColor && totalBrick == 0)
+            {
                 return false;
+            }
+        
         }
         return true;
+    }
+
+    private void RegenerateBrick(int zone)
+    {
+        BrickGenerators[zone].RegenerateBricks();
     }
 
     private void RemovePlayerBrick()
@@ -129,9 +147,10 @@ public class Player : Character
 
         if (other.CompareTag(Tag.BRICK))
         {
-            if(brick.colorName == playerColorName)
+            if(brick.colorName == playerDataSO.PlayerData.playerColor)
             {
                 Destroy(other.gameObject);
+                BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdatePlayerBrick(brick.color);
             }
         }
@@ -148,8 +167,7 @@ public class Player : Character
     {
         int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
-        playerColorName = colorDataSO.ColorDatas[randomColor].colorName;
-
+        playerDataSO.PlayerData.playerColor = colorDataSO.ColorDatas[randomColor].colorName;
     }
 
     public ColorData FindColorDataByGameColor(GameColor targetColor)

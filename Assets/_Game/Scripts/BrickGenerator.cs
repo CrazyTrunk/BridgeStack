@@ -21,9 +21,8 @@ public class BrickGenerator : MonoBehaviour
         zPosInit = position.z;
         xPosInit = position.x;
         brickSpawnSO.BrickSpawnDatas = new List<BrickSpawnData>();
-        SpawnBricks();
     }
-    private void SpawnBricks()
+    public void SpawnBricks()
     {
         Vector3 currentPos = new Vector3(xPosInit, position.y, zPosInit);
 
@@ -73,7 +72,7 @@ public class BrickGenerator : MonoBehaviour
         };
         brickSpawnSO.BrickSpawnDatas.Add(newBrickData);
     }
-    private void RegenerateBricks()
+    public void RegenerateBricks()
     {
         for(int i = 0; i < brickSpawnSO.BrickSpawnDatas.Count; i++)
         {

@@ -8,6 +8,7 @@ TagManager:
   - Brick
   - Wall
   - StairBrick
+  - Ground
   layers:
   - Default
   - TransparentFX

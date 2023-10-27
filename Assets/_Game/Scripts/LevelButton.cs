@@ -6,6 +6,7 @@ using static Cinemachine.DocumentationSortingAttribute;
 public class LevelButton : MonoBehaviour
 {
     [SerializeField] Transform spawnPoint;
+    [SerializeField] PlayerDataSO playerDataSO;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +20,7 @@ public class LevelButton : MonoBehaviour
         {
             GameObject currentPlayer = Instantiate(player);
             currentPlayer.transform.position = spawnPoint.position;
+            playerDataSO.PlayerData.Position = spawnPoint.position;
         }
         CameraFollow.Instance.Init();
     }
