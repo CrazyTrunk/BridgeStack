@@ -73,4 +73,20 @@ public class BrickGenerator : MonoBehaviour
         };
         brickSpawnSO.BrickSpawnDatas.Add(newBrickData);
     }
+    private void RegenerateBricks()
+    {
+        for(int i = 0; i < brickSpawnSO.BrickSpawnDatas.Count; i++)
+        {
+            if (brickSpawnSO.BrickSpawnDatas[i].removed == true)
+            {
+                Transform createdBrick = Instantiate(BrickPrefab, brickSpawnSO.BrickSpawnDatas[i].position, BrickPrefab.transform.rotation, transform);
+                createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickSpawnSO.BrickSpawnDatas[i].color);
+                createdBrick.GetComponent<Brick>().colorName = brickSpawnSO.BrickSpawnDatas[i].colorName;
+                createdBrick.GetComponent<Brick>().brickNumber = i;
+                createdBrick.GetComponent<Brick>().color = brickSpawnSO.BrickSpawnDatas[i].color;
+                brickSpawnSO.BrickSpawnDatas[i].removed = false;
+                return;
+            }
+        }
+    }
 }

@@ -33,7 +33,7 @@ public class Player : Character
 
     [Header("Stair Brick")]
     [SerializeField] private LayerMask stairLayer;
-
+    private BrickGenerator[] brickGenerators;
 
     private void Start()
     {
@@ -75,7 +75,7 @@ public class Player : Character
                 brick.colorName = currentPlayerColorData.colorName;
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
-                totalBrick--;
+                RemovePlayerBrick();
                 return true;
             }
             if (brick.colorName == GameColor.NoColor && totalBrick == 0)
@@ -84,6 +84,11 @@ public class Player : Character
         return true;
     }
 
+    private void RemovePlayerBrick()
+    {
+        totalBrick--;
+        Destroy(brickHolder.GetChild(0).gameObject);
+    }
 
     private void MovePlayer()
     {
@@ -124,9 +129,11 @@ public class Player : Character
 
         if (other.CompareTag(Tag.BRICK))
         {
-
-            Destroy(other.gameObject);
-            UpdatePlayerBrick(brick.color);
+            if(brick.colorName == playerColorName)
+            {
+                Destroy(other.gameObject);
+                UpdatePlayerBrick(brick.color);
+            }
         }
     }
     private void UpdatePlayerBrick(Color brickcolor)
@@ -136,7 +143,6 @@ public class Player : Character
         brick.localPosition = brickPosition;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
         totalBrick++;
-        Debug.Log($"totalBrick ++ {totalBrick}");
     }
     private void RandomColorPlayer()
     {
