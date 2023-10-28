@@ -8,5 +8,6 @@ public class Tag
 {
     public const string BRICK = "Brick";
     public const string STAIR_BRICK = "StairBrick";
+    public const string DOOR = "Door";
 
 }

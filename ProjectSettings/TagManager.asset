@@ -9,6 +9,8 @@ TagManager:
   - Wall
   - StairBrick
   - Ground
+  - PathWay
+  - Door
   layers:
   - Default
   - TransparentFX

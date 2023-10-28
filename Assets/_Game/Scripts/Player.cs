@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : Character
@@ -85,7 +86,12 @@ public class Player : Character
                 brick.colorName = currentPlayerColorData.colorName;
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
+                brick.pathway.BrickPlaced++;
                 RemovePlayerBrick();
+                if(brick.pathway.BrickPlaced == brick.pathway.TotalStair)
+                {
+                    brick.pathway.OpenDoor();   
+                }
                 return true;
             }
             if (brick.colorName == GameColor.NoColor && totalBrick == 0)
@@ -105,7 +111,7 @@ public class Player : Character
     private void RemovePlayerBrick()
     {
         totalBrick--;
-        Destroy(brickHolder.GetChild(0).gameObject);
+        Destroy(brickHolder.GetChild(brickHolder.childCount - 1).gameObject);
     }
 
     private void MovePlayer()
@@ -155,11 +161,21 @@ public class Player : Character
             }
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tag.DOOR))
+        {
+            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        }
+            
+    }
     private void UpdatePlayerBrick(Color brickcolor)
     {
         Transform brick = Instantiate(brickPrefab, brickHolder);
         Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
         brick.localPosition = brickPosition;
+        playerDataSO.PlayerData.totalBrickCollected++;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
         totalBrick++;
     }

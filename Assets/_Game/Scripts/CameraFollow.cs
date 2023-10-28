@@ -24,6 +24,6 @@ public class CameraFollow : Singleton<CameraFollow>
 
     void LateUpdate()
     {
-        transform.position = Vector3.SmoothDamp(transform.position, target.position + offset, ref velocity,0.4f);
+        transform.position = Vector3.SmoothDamp(transform.position, target.position + offset, ref velocity,0.2f);
     }
 }
