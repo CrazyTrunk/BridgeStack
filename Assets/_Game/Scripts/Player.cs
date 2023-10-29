@@ -6,20 +6,9 @@ using UnityEngine;
 
 public class Player : Character
 {
-    [SerializeField] float speed = 5f;
     private InputManager inputManager;
-    [SerializeField] private Animator animator;
-    private string CurrentAnim;
-    [Header("Ground Detetion")]
-    [SerializeField] LayerMask groundMask;
-    //bool isGround;
-    //float radius = 0.5f;
-    public float playerHeight;
-
-    Vector3 moveMovement;
 
     [Header("SO")]
-    [SerializeField] private ColorDataSO colorDataSO;
     [SerializeField] private PlayerDataSO playerDataSO;
 
     [Header("Brick Holder and Placer")]
@@ -41,15 +30,17 @@ public class Player : Character
 
     private void Start()
     {
-        OnInit();
-        RandomColorPlayer();
+        OnInitPlayer();
+        int randomColor = base.RandomColorCharacter();
+        playerDataSO.PlayerData.playerColor = colorDataSO.ColorDatas[randomColor].colorName;
+
     }
-    public void OnInit()
+    public void OnInitPlayer()
     {
+        base.OnInit();
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
-        playerHeight = collider.height;
         BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
         playerDataSO.PlayerData.Zone = 0;
         BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
@@ -62,7 +53,7 @@ public class Player : Character
     private bool OnSlope()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, Vector3.down, out hit, playerHeight / 2 * slopeForceRayLength))
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, characterHeight / 2 * slopeForceRayLength))
         {
             if (hit.normal != Vector3.up)
             {
@@ -123,13 +114,13 @@ public class Player : Character
         if (!CheckBridgeStair())
             return;
 
-        moveMovement = speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
+        moveMovement = Speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
         if (moveMovement.magnitude > 0)
         {
             Vector3 lookDirection = new Vector3(moveMovement.x, 0, moveMovement.z);
             if (OnSlope())
             {
-                moveMovement += Vector3.down * playerHeight / 2 * slopeForce * Time.deltaTime;
+                moveMovement += Vector3.down * characterHeight / 2 * slopeForce * Time.deltaTime;
             }
 
             transform.position += moveMovement;
@@ -140,15 +131,6 @@ public class Player : Character
         else
         {
             ChangeAnim("idle");
-        }
-    }
-    protected void ChangeAnim(string animName)
-    {
-        if (CurrentAnim != animName)
-        {
-            animator.ResetTrigger(animName);
-            CurrentAnim = animName;
-            animator.SetTrigger(CurrentAnim);
         }
     }
     private void OnTriggerEnter(Collider other)
@@ -202,13 +184,6 @@ public class Player : Character
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
         totalBrick++;
     }
-    private void RandomColorPlayer()
-    {
-        int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
-        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
-        playerDataSO.PlayerData.playerColor = colorDataSO.ColorDatas[randomColor].colorName;
-    }
-
     public ColorData FindColorDataByGameColor(GameColor targetColor)
     {
         foreach (ColorData data in colorDataSO.ColorDatas)
