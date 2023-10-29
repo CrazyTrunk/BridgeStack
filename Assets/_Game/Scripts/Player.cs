@@ -36,6 +36,9 @@ public class Player : Character
     [Header("Stair Brick")]
     [SerializeField] private LayerMask stairLayer;
     [SerializeField] BrickGenerator[] BrickGenerators;
+
+    private bool hasExitedDoor = false;
+
     private void Start()
     {
         OnInit();
@@ -48,6 +51,7 @@ public class Player : Character
         inputManager = InputManager.Instance;
         playerHeight = collider.height;
         BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
+        playerDataSO.PlayerData.Zone = 0;
         BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
     }
     private void Update()
@@ -69,9 +73,9 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
-        if(totalBrick == 0)
+        if (totalBrick == 0)
         {
-            RegenerateBrick(playerDataSO.PlayerData.Zone);  
+            RegenerateBrick(playerDataSO.PlayerData.Zone);
         }
         if (inputManager.MovementAmount.y <= 0)
             return true;
@@ -88,9 +92,9 @@ public class Player : Character
                 brick.brickRenderer.enabled = true;
                 brick.pathway.BrickPlaced++;
                 RemovePlayerBrick();
-                if(brick.pathway.BrickPlaced == brick.pathway.TotalStair)
+                if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
                 {
-                    brick.pathway.OpenDoor();   
+                    brick.pathway.OpenDoor();
                 }
                 return true;
             }
@@ -98,7 +102,7 @@ public class Player : Character
             {
                 return false;
             }
-        
+
         }
         return true;
     }
@@ -153,7 +157,7 @@ public class Player : Character
 
         if (other.CompareTag(Tag.BRICK))
         {
-            if(brick.colorName == playerDataSO.PlayerData.playerColor)
+            if (brick.colorName == playerDataSO.PlayerData.playerColor)
             {
                 Destroy(other.gameObject);
                 BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
@@ -163,12 +167,31 @@ public class Player : Character
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(Tag.DOOR))
+        if (other.CompareTag(Tag.DOOR) && !hasExitedDoor)
         {
+            hasExitedDoor = true;
+
             other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
             other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
         }
-            
+
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag(Tag.GROUND) )
+        {
+            if (collision.collider.name == "Zone1")
+            {
+                playerDataSO.PlayerData.Zone = 0;
+                Debug.Log($"Zone 1 {playerDataSO.PlayerData.Zone}");
+            }
+            else if (collision.collider.name == "Zone2")
+            {
+                playerDataSO.PlayerData.Zone = 1;
+                Debug.Log($"Zone 2 {playerDataSO.PlayerData.Zone}");
+            }
+        }
     }
     private void UpdatePlayerBrick(Color brickcolor)
     {

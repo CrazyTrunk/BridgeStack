@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 public class Tag
 {
     public const string BRICK = "Brick";
+    public const string GROUND = "Ground";
     public const string STAIR_BRICK = "StairBrick";
     public const string DOOR = "Door";
 

@@ -15,7 +15,7 @@ public class BrickGenerator : MonoBehaviour
     float zPosInit;
     float xPosInit;
 
-    private void Start()
+    private void OnInit()
     {
         position = transform.position;
         zPosInit = position.z;
@@ -24,6 +24,7 @@ public class BrickGenerator : MonoBehaviour
     }
     public void SpawnBricks()
     {
+        OnInit();
         Vector3 currentPos = new Vector3(xPosInit, position.y, zPosInit);
 
         for (int i = 0; i < length; i++)
@@ -45,7 +46,6 @@ public class BrickGenerator : MonoBehaviour
 
         }
     }
-
     private void GiveColorBrick(Transform createdBrick, int i)
     {
         int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
