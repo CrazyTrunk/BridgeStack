@@ -11,12 +11,7 @@ public class Player : Character
     [Header("SO")]
     [SerializeField] private PlayerDataSO playerDataSO;
 
-    [Header("Brick Holder and Placer")]
-    [SerializeField] public Transform brickHolder;
-    [SerializeField] private Transform brickPrefab;
-    [SerializeField] private Transform brickPlacer;
 
-    float totalBrick = 0;
     [Header("Slope")]
 
     [SerializeField] private float slopeForce;
@@ -82,7 +77,7 @@ public class Player : Character
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
                 brick.pathway.BrickPlaced++;
-                RemovePlayerBrick();
+                base.RemovePlayerBrick();
                 if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
                 {
                     brick.pathway.OpenDoor();
@@ -103,11 +98,7 @@ public class Player : Character
         BrickGenerators[zone].RegenerateBricks();
     }
 
-    private void RemovePlayerBrick()
-    {
-        totalBrick--;
-        Destroy(brickHolder.GetChild(brickHolder.childCount - 1).gameObject);
-    }
+
 
     private void MovePlayer()
     {

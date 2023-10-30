@@ -16,6 +16,12 @@ public class Character : MonoBehaviour
     public Vector3 moveMovement;
     [Header("SO")]
     [SerializeField] public ColorDataSO colorDataSO;
+    protected float totalBrick = 0;
+
+    [Header("Brick Holder and Placer")]
+    [SerializeField] public Transform brickHolder;
+    [SerializeField] public Transform brickPrefab;
+    [SerializeField] public Transform brickPlacer;
 
     public float Speed { get => speed; set => speed = value; }
 
@@ -40,5 +46,10 @@ public class Character : MonoBehaviour
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
         // More logic for color if needed
         return randomColor;
+    }
+    public void RemovePlayerBrick()
+    {
+        totalBrick--;
+        Destroy(brickHolder.GetChild(brickHolder.childCount - 1).gameObject);
     }
 }
