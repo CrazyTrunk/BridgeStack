@@ -20,10 +20,10 @@ public class Player : Character
 
     [Header("Stair Brick")]
     [SerializeField] private LayerMask stairLayer;
-    BrickGenerator[] BrickGenerators;
     private bool hasExitedDoor = false;
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         OnInitPlayer();
         int randomColor = ColorManager.Instance.GetNextColorIndex();
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
@@ -35,7 +35,6 @@ public class Player : Character
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
-        BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
         playerDataSO.PlayerData.Zone = 0;
         BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
     }

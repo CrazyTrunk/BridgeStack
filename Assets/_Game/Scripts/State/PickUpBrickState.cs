@@ -4,56 +4,48 @@ using UnityEngine;
 public class PickUpBrickState : IState
 {
     private Bot bot;
-    private GameObject targetBrick;
-
+    private Collider[] detectedObjects = new Collider[10];
+    private Transform targetBrick;
     public PickUpBrickState(Bot bot)
     {
         this.bot = bot;
     }
     public void OnEnter()
     {
-        targetBrick = FindNearestBrickWithTag(Tag.BRICK);
-        if (targetBrick != null)
-        {
-            bot.Agent.SetDestination(targetBrick.transform.position);
-        }
-        float distance = Vector3.Distance(bot.transform.position, targetBrick.transform.position);
-        if (distance <= 1.0f) 
-        {
-            //PickupBrick(targetBrick);
-            // Transition to another state
-            // bot.SetState(new IdleState(bot));
-        }
+        targetBrick = DetectBricksAroundBot();
     }
 
     public void OnExecute()
     {
-        if (targetBrick == null)
+        if(targetBrick != null)
         {
-            return;
+            UpdateBotBrick();
+            bot.DestroyBrickObject(targetBrick);
         }
     }
 
     public void OnExit()
     {
     }
-    private GameObject FindNearestBrickWithTag(string tag)
+    private Transform DetectBricksAroundBot()
     {
-        GameObject[] bricks = GameObject.FindGameObjectsWithTag(tag);
-        GameObject closest = null;
-        float closestDistance = float.MaxValue;
+        int detectedCount = Physics.OverlapSphereNonAlloc(bot.transform.position, 10f, detectedObjects); 
 
-        foreach (GameObject brick in bricks)
+        for (int i = 0; i < detectedCount; i++)
         {
-            float distance = Vector3.Distance(bot.transform.position, brick.transform.position);
-            if (distance < closestDistance)
+            if (detectedObjects[i].CompareTag(Tag.BRICK))  
             {
-                closestDistance = distance;
-                closest = brick;
+                Brick brick = detectedObjects[i].GetComponent<Brick>();
+                if(brick.colorName == bot.BotColor)
+                {
+                   return detectedObjects[i].transform;
+                }
             }
         }
-
-        return closest;
+        return null;
     }
-
+    private void UpdateBotBrick()
+    {
+       
+    }
 }

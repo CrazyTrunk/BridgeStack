@@ -10,16 +10,16 @@ public class Bot : Character
     private IState currentState;
     [SerializeField] private Transform zone;
     public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public GameColor BotColor { get => botColor; set => botColor = value; }
+
     GameColor botColor;
-    private void Start()
+    public override void Start()
     {
+        base.Start();
         int randomColor = ColorManager.Instance.GetNextColorIndex();
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
-        botColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
-        ChangeAnim("run");
+        BotColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
         destination = GameObject.FindGameObjectWithTag(Tag.DESTINATION);
-        //Agent.SetDestination(destionation.transform.position);
-        StartCoroutine(FindBrickRoutine());
     }
     private void Update()
     {
@@ -32,13 +32,8 @@ public class Bot : Character
         currentState = newState;
         currentState?.OnEnter();
     }
-    private IEnumerator FindBrickRoutine()
+    public void DestroyBrickObject(Transform brick)
     {
-        while (true) 
-        {
-            yield return new WaitForSeconds(1f);
-
-            SetState(new PickUpBrickState(this));
-        }
+        Destroy(brick.gameObject);
     }
 }

@@ -22,19 +22,17 @@ public class Character : MonoBehaviour
     [SerializeField] public Transform brickHolder;
     [SerializeField] public Transform brickPrefab;
     [SerializeField] public Transform brickPlacer;
-    private List<int> unusedColorIndices;
 
     public float Speed { get => speed; set => speed = value; }
+    public BrickGenerator[] BrickGenerators;
 
-    public virtual void OnInit()
+    public virtual void Start()
     {
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         characterHeight = collider.height;
-    }
-    public void InitializeColors()
-    {
-        unusedColorIndices = Enumerable.Range(0, ColorManager.Instance.colorDataSO.ColorDatas.Count).ToList();
+        BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
+
     }
     public void ChangeAnim(string animName)
     {
@@ -45,13 +43,6 @@ public class Character : MonoBehaviour
             animator.SetTrigger(CurrentAnim);
         }
     }
-    //protected int RandomColorCharacter()
-    //{
-    //    int randomColor = Random.Range(0, ColorManager.Instance.colorDataSO.ColorDatas.Count);
-    //    transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
-    //    // More logic for color if needed
-    //    return randomColor;
-    //}
     public void RemovePlayerBrick()
     {
         totalBrick--;
