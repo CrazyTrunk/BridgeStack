@@ -19,7 +19,7 @@ public class Player : Character
 
     [Header("Stair Brick")]
     [SerializeField] private LayerMask stairLayer;
-     BrickGenerator[] BrickGenerators;
+    BrickGenerator[] BrickGenerators;
     private bool hasExitedDoor = false;
     private bool isMoving = true;
     private void Start()
@@ -152,7 +152,7 @@ public class Player : Character
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.collider.CompareTag(Tag.GROUND) )
+        if (collision.collider.CompareTag(Tag.GROUND))
         {
             if (collision.collider.name == "Zone1")
             {
@@ -164,10 +164,6 @@ public class Player : Character
                 playerDataSO.PlayerData.Zone = 1;
                 Debug.Log($"Zone 2 {playerDataSO.PlayerData.Zone}");
             }
-        }
-        if (collision.collider.CompareTag(Tag.WALL))  // or if(gameObject.CompareTag("YourWallTag"))
-        {
-            rb.velocity = Vector3.zero;
         }
     }
     private void UpdatePlayerBrick(Color brickcolor)
