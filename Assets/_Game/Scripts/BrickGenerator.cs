@@ -6,7 +6,7 @@ public class BrickGenerator : MonoBehaviour
     [SerializeField]
     private Transform BrickPrefab;
     [SerializeField] public List<BrickSpawnData> BrickSpawnDatas;
-    [SerializeField] public ColorDataSO colorDataSO;
+    //[SerializeField] public ColorDataSO colorDataSO;
     private int length = 24;// number of bricks
     private Vector3 position;// each Brick Pos
     private int line = 6;
@@ -48,13 +48,13 @@ public class BrickGenerator : MonoBehaviour
     }
     private void GiveColorBrick(Transform createdBrick, int i)
     {
-        int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
+        int randomColor = Random.Range(0, ColorManager.Instance.colorDataSO.ColorDatas.Count);
         //_Color Shader Color Properties
-        createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
-        createdBrick.GetComponent<Brick>().colorName = colorDataSO.ColorDatas[randomColor].colorName;
+        createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
+        createdBrick.GetComponent<Brick>().colorName = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
         createdBrick.GetComponent<Brick>().brickNumber = i;
-        createdBrick.GetComponent<Brick>().color = colorDataSO.ColorDatas[randomColor].color;
-        InsertBrickSpawnDataToList(colorDataSO.ColorDatas[randomColor].color, colorDataSO.ColorDatas[randomColor].colorName, createdBrick);
+        createdBrick.GetComponent<Brick>().color = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color;
+        InsertBrickSpawnDataToList(ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color, ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName, createdBrick);
     }
     public void MakeRemovedBrick(int brickNumber)
     {

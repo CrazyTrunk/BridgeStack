@@ -1767,7 +1767,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BrickPrefab: {fileID: 4857897480042355356, guid: 9f9761143a631e940992107a15b0598d, type: 3}
-  colorDataSO: {fileID: 11400000, guid: 97e46857577e4644ba6327bf2e877421, type: 2}
 --- !u!4 &472566645
 Transform:
   m_ObjectHideFlags: 0
@@ -3359,6 +3358,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   joyStickSize: {x: 250, y: 250}
   joyStick: {fileID: 2120297827}
+--- !u!1 &1210688358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1210688359}
+  - component: {fileID: 1210688360}
+  m_Layer: 0
+  m_Name: ColorManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1210688359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210688358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.976717, y: 0.49753284, z: 3.60993}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1210688360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1210688358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f14805224c80b3b47ab6a43fff9cfaed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  colorDataSO: {fileID: 11400000, guid: 97e46857577e4644ba6327bf2e877421, type: 2}
 --- !u!1 &1228061849
 GameObject:
   m_ObjectHideFlags: 0
@@ -5784,7 +5828,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BrickPrefab: {fileID: 4857897480042355356, guid: 9f9761143a631e940992107a15b0598d, type: 3}
-  colorDataSO: {fileID: 11400000, guid: 97e46857577e4644ba6327bf2e877421, type: 2}
 --- !u!4 &1952885995
 Transform:
   m_ObjectHideFlags: 0
@@ -7548,12 +7591,11 @@ MonoBehaviour:
     m_Bits: 0
   characterHeight: 0
   moveMovement: {x: 0, y: 0, z: 0}
-  colorDataSO: {fileID: 11400000, guid: 97e46857577e4644ba6327bf2e877421, type: 2}
   brickHolder: {fileID: 2350978880363094692}
   brickPrefab: {fileID: 4857897480042355356, guid: 9f9761143a631e940992107a15b0598d, type: 3}
   brickPlacer: {fileID: 1835401608718745873}
-  currentState: 0
   agent: {fileID: 5149638027218457234}
+  zone: {fileID: 163009583}
 --- !u!33 &7186296479524870361
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -7608,6 +7650,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 776267940}
   - {fileID: 1204216847}
+  - {fileID: 1210688359}
   - {fileID: 1547777278}
   - {fileID: 733485264}
   - {fileID: 5149638027218457233}

@@ -5,17 +5,21 @@ using UnityEngine.AI;
 
 public class Bot : Character
 {
-    private GameObject destionation;
+    private GameObject destination;
     [SerializeField] private NavMeshAgent agent;
     private IState currentState;
     [SerializeField] private Transform zone;
     public NavMeshAgent Agent { get => agent; set => agent = value; }
-
+    GameColor botColor;
     private void Start()
     {
+        int randomColor = ColorManager.Instance.GetNextColorIndex();
+        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
+        botColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
         ChangeAnim("run");
-        destionation = GameObject.FindGameObjectWithTag(Tag.DESTINATION);
+        destination = GameObject.FindGameObjectWithTag(Tag.DESTINATION);
         //Agent.SetDestination(destionation.transform.position);
+        StartCoroutine(FindBrickRoutine());
     }
     private void Update()
     {
@@ -28,5 +32,13 @@ public class Bot : Character
         currentState = newState;
         currentState?.OnEnter();
     }
+    private IEnumerator FindBrickRoutine()
+    {
+        while (true) 
+        {
+            yield return new WaitForSeconds(1f);
 
+            SetState(new PickUpBrickState(this));
+        }
+    }
 }

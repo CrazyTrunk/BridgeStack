@@ -25,13 +25,13 @@ public class Player : Character
     private void Start()
     {
         OnInitPlayer();
-        int randomColor = base.RandomColorCharacter();
-        playerDataSO.PlayerData.playerColor = colorDataSO.ColorDatas[randomColor].colorName;
+        int randomColor = ColorManager.Instance.GetNextColorIndex();
+        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
+        playerDataSO.PlayerData.playerColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
 
     }
     public void OnInitPlayer()
     {
-        base.OnInit();
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
@@ -194,7 +194,7 @@ public class Player : Character
     }
     public ColorData FindColorDataByGameColor(GameColor targetColor)
     {
-        foreach (ColorData data in colorDataSO.ColorDatas)
+        foreach (ColorData data in ColorManager.Instance.colorDataSO.ColorDatas)
         {
             if (data.colorName == targetColor)
             {

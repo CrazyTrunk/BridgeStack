@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class Character : MonoBehaviour
@@ -15,13 +16,13 @@ public class Character : MonoBehaviour
 
     public Vector3 moveMovement;
     [Header("SO")]
-    [SerializeField] public ColorDataSO colorDataSO;
     protected float totalBrick = 0;
 
     [Header("Brick Holder and Placer")]
     [SerializeField] public Transform brickHolder;
     [SerializeField] public Transform brickPrefab;
     [SerializeField] public Transform brickPlacer;
+    private List<int> unusedColorIndices;
 
     public float Speed { get => speed; set => speed = value; }
 
@@ -30,6 +31,10 @@ public class Character : MonoBehaviour
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         characterHeight = collider.height;
+    }
+    public void InitializeColors()
+    {
+        unusedColorIndices = Enumerable.Range(0, ColorManager.Instance.colorDataSO.ColorDatas.Count).ToList();
     }
     public void ChangeAnim(string animName)
     {
@@ -40,13 +45,13 @@ public class Character : MonoBehaviour
             animator.SetTrigger(CurrentAnim);
         }
     }
-    protected int RandomColorCharacter()
-    {
-        int randomColor = Random.Range(0, colorDataSO.ColorDatas.Count);
-        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", colorDataSO.ColorDatas[randomColor].color);
-        // More logic for color if needed
-        return randomColor;
-    }
+    //protected int RandomColorCharacter()
+    //{
+    //    int randomColor = Random.Range(0, ColorManager.Instance.colorDataSO.ColorDatas.Count);
+    //    transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
+    //    // More logic for color if needed
+    //    return randomColor;
+    //}
     public void RemovePlayerBrick()
     {
         totalBrick--;
