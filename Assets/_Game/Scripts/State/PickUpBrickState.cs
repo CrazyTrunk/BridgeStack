@@ -4,48 +4,51 @@ using UnityEngine;
 public class PickUpBrickState : IState
 {
     private Bot bot;
-    private Collider[] detectedObjects = new Collider[10];
+    private Collider[] detectedObjects = new Collider[30];
     private Transform targetBrick;
+    float radius = 5f;
     public PickUpBrickState(Bot bot)
     {
         this.bot = bot;
     }
     public void OnEnter()
     {
-        targetBrick = DetectBricksAroundBot();
+        bot.ChangeAnim("run");
     }
 
     public void OnExecute()
     {
-        if(targetBrick != null)
+        targetBrick = FindNearestBrickOfSameColor();
+        if (targetBrick != null)
         {
-            UpdateBotBrick();
-            bot.DestroyBrickObject(targetBrick);
+            bot.Agent.SetDestination(targetBrick.position);
+        }
+        else
+        {
+            radius += 2;
         }
     }
 
     public void OnExit()
     {
+        targetBrick = null;
+        radius = 10f;
     }
-    private Transform DetectBricksAroundBot()
+    private Transform FindNearestBrickOfSameColor()
     {
-        int detectedCount = Physics.OverlapSphereNonAlloc(bot.transform.position, 10f, detectedObjects); 
-
-        for (int i = 0; i < detectedCount; i++)
+        int numColliders = Physics.OverlapSphereNonAlloc(bot.Agent.transform.position, radius, detectedObjects);
+        for (int i = 0; i < numColliders; i++)
         {
-            if (detectedObjects[i].CompareTag(Tag.BRICK))  
+            if (detectedObjects[i].CompareTag(Tag.BRICK))
             {
                 Brick brick = detectedObjects[i].GetComponent<Brick>();
                 if(brick.colorName == bot.BotColor)
                 {
-                   return detectedObjects[i].transform;
+                    return detectedObjects[i].transform;
                 }
             }
         }
         return null;
     }
-    private void UpdateBotBrick()
-    {
-       
-    }
+
 }

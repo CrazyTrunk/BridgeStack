@@ -33,10 +33,8 @@ public class Player : Character
     public void OnInitPlayer()
     {
         ChangeAnim("idle");
-        CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         inputManager = InputManager.Instance;
         playerDataSO.PlayerData.Zone = 0;
-        BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
     }
     private void Update()
     {
@@ -57,10 +55,10 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
-        if (totalBrick == 0)
-        {
-            RegenerateBrick(playerDataSO.PlayerData.Zone);
-        }
+        //if (totalBrick == 0)
+        //{
+        //    RegenerateBrick(playerDataSO.PlayerData.Zone);
+        //}
         if (inputManager.MovementAmount.y <= 0)
             return true;
         RaycastHit hit;
@@ -135,7 +133,7 @@ public class Player : Character
             if (brick.colorName == playerDataSO.PlayerData.playerColor)
             {
                 Destroy(other.gameObject);
-                BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
+                //BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdatePlayerBrick(brick.color);
             }
         }

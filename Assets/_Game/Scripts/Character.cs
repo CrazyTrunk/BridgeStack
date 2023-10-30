@@ -10,13 +10,11 @@ public class Character : MonoBehaviour
     private string CurrentAnim;
     [Header("Ground Detetion")]
     [SerializeField] LayerMask groundMask;
-    //bool isGround;
-    //float radius = 0.5f;
     public float characterHeight;
 
     public Vector3 moveMovement;
     [Header("SO")]
-    protected float totalBrick = 0;
+    public float totalBrick = 0;
 
     [Header("Brick Holder and Placer")]
     [SerializeField] public Transform brickHolder;
@@ -25,14 +23,19 @@ public class Character : MonoBehaviour
 
     public float Speed { get => speed; set => speed = value; }
     public BrickGenerator[] BrickGenerators;
-
+    public void Awake()
+    {
+        BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
+        if (this is Player)
+        {
+            BrickGenerators[0].SpawnBricks();
+        }
+    }
     public virtual void Start()
     {
         ChangeAnim("idle");
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         characterHeight = collider.height;
-        BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
-
     }
     public void ChangeAnim(string animName)
     {
