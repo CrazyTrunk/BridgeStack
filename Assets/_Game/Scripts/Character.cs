@@ -31,7 +31,7 @@ public class Character : MonoBehaviour
         CapsuleCollider collider = transform.GetComponent<CapsuleCollider>();
         characterHeight = collider.height;
     }
-    protected void ChangeAnim(string animName)
+    public void ChangeAnim(string animName)
     {
         if (CurrentAnim != animName)
         {
