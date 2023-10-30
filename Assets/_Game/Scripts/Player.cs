@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player : Character
 {
     private InputManager inputManager;
+    private float wallCheckDistance = 0.3f;
 
     [Header("SO")]
     [SerializeField] private PlayerDataSO playerDataSO;
@@ -21,7 +22,6 @@ public class Player : Character
     [SerializeField] private LayerMask stairLayer;
     BrickGenerator[] BrickGenerators;
     private bool hasExitedDoor = false;
-    private bool isMoving = true;
     private void Start()
     {
         OnInitPlayer();
@@ -101,11 +101,14 @@ public class Player : Character
 
     private void MovePlayer()
     {
-        isMoving = CheckBridgeStair();
-        if (!isMoving)
-            return;
 
+        if (!CheckBridgeStair())
+            return;
         moveMovement = Speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
+        if (IsFacingWall(moveMovement))
+        {
+            return; 
+        }
         if (moveMovement.magnitude > 0)
         {
             Vector3 lookDirection = new Vector3(moveMovement.x, 0, moveMovement.z);
@@ -174,6 +177,20 @@ public class Player : Character
         playerDataSO.PlayerData.totalBrickCollected++;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
         totalBrick++;
+    }
+    private bool IsFacingWall(Vector3 direction)
+    {
+        RaycastHit hit;
+        Debug.DrawRay(brickPlacer.position, direction.normalized * wallCheckDistance, Color.red);
+
+        if (Physics.Raycast(brickPlacer.position, direction.normalized, out hit, wallCheckDistance))
+        {
+            if (hit.collider.CompareTag(Tag.WALL))
+            {
+                return true;
+            }
+        }
+        return false;
     }
     public ColorData FindColorDataByGameColor(GameColor targetColor)
     {
