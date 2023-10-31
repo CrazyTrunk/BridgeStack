@@ -38,8 +38,10 @@ public class Player : Character
     }
     private void Update()
     {
-        //isGround = Physics.CheckSphere(transform.position, radius, groundMask);
-        MovePlayer();
+        if(inputManager.MovementAmount.x != 0 || inputManager.MovementAmount.y != 0)
+            MovePlayer();
+        else
+            ChangeAnim("idle");
     }
     private bool OnSlope()
     {
@@ -55,17 +57,18 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
-        //if (totalBrick == 0)
-        //{
-        //    RegenerateBrick(playerDataSO.PlayerData.Zone);
-        //}
+
         if (inputManager.MovementAmount.y <= 0)
             return true;
         RaycastHit hit;
         if (Physics.Raycast(brickPlacer.position + Vector3.up * 2f, Vector3.down, out hit, Mathf.Infinity, stairLayer))
         {
+            if (totalBrick == 0)
+            {
+                RegenerateBrick(playerDataSO.PlayerData.Zone);
+            }
             StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
-            if (totalBrick > 0 && brick.colorName == GameColor.NoColor)
+            if ((totalBrick > 0 && brick.colorName == GameColor.NoColor) || (totalBrick > 0 && brick.colorName != playerDataSO.PlayerData.playerColor))
             {
                 ColorData currentPlayerColorData = FindColorDataByGameColor(playerDataSO.PlayerData.playerColor);
                 brick.brickRenderer.material.color = currentPlayerColorData.color;
@@ -73,14 +76,14 @@ public class Player : Character
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
                 brick.pathway.BrickPlaced++;
-                base.RemovePlayerBrick();
+                base.RemoveBrick();
                 if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
                 {
                     brick.pathway.OpenDoor();
                 }
                 return true;
             }
-            if (brick.colorName == GameColor.NoColor && totalBrick == 0)
+            if ((brick.colorName == GameColor.NoColor && totalBrick == 0) || (totalBrick == 0 && brick.colorName != playerDataSO.PlayerData.playerColor))
             {
                 return false;
             }
@@ -91,7 +94,7 @@ public class Player : Character
 
     private void RegenerateBrick(int zone)
     {
-        BrickGenerators[zone].RegenerateBricks();
+        BrickGenerators[zone].RegenerateBricks(playerDataSO.PlayerData.playerColor);
     }
 
 
@@ -133,7 +136,7 @@ public class Player : Character
             if (brick.colorName == playerDataSO.PlayerData.playerColor)
             {
                 Destroy(other.gameObject);
-                //BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
+                BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdatePlayerBrick(brick.color);
             }
         }
@@ -157,12 +160,10 @@ public class Player : Character
             if (collision.collider.name == "Zone1")
             {
                 playerDataSO.PlayerData.Zone = 0;
-                Debug.Log($"Zone 1 {playerDataSO.PlayerData.Zone}");
             }
             else if (collision.collider.name == "Zone2")
             {
                 playerDataSO.PlayerData.Zone = 1;
-                Debug.Log($"Zone 2 {playerDataSO.PlayerData.Zone}");
             }
         }
     }

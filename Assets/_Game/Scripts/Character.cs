@@ -46,7 +46,7 @@ public class Character : MonoBehaviour
             animator.SetTrigger(CurrentAnim);
         }
     }
-    public void RemovePlayerBrick()
+    public void RemoveBrick()
     {
         totalBrick--;
         Destroy(brickHolder.GetChild(brickHolder.childCount - 1).gameObject);

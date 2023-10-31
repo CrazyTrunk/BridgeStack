@@ -72,11 +72,11 @@ public class BrickGenerator : MonoBehaviour
         };
         BrickSpawnDatas.Add(newBrickData);
     }
-    public void RegenerateBricks()
+    public void RegenerateBricks(GameColor color)
     {
         for(int i = 0; i < BrickSpawnDatas.Count; i++)
         {
-            if (BrickSpawnDatas[i].removed == true)
+            if (BrickSpawnDatas[i].removed == true && BrickSpawnDatas[i].colorName == color)
             {
                 Transform createdBrick = Instantiate(BrickPrefab, BrickSpawnDatas[i].position, BrickPrefab.transform.rotation, transform);
                 createdBrick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", BrickSpawnDatas[i].color);

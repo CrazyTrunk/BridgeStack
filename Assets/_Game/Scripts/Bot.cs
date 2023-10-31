@@ -1,26 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 
 public class Bot : Character
 {
     private GameObject destination;
     [SerializeField] private NavMeshAgent agent;
     private IState currentState;
-    [SerializeField] private Transform zone;
-    public NavMeshAgent Agent { get => agent; set => agent = value; }
-    public GameColor BotColor { get => botColor; set => botColor = value; }
+    private BotData botData;
 
-    GameColor botColor;
+    public NavMeshAgent Agent { get => agent; set => agent = value; }
+    public BotData BotData { get => botData; set => botData = value; }
+
+    public Zone currentZone;
+    [SerializeField] private LayerMask stairLayer;
+    public LayerMask StairLayer { get => stairLayer; set => stairLayer = value; }
+
     public override void Start()
     {
         base.Start();
+        Oninit();
+        SetState(new PickUpBrickState(this));
+    }
+    private void Oninit()
+    {
+        botData = new BotData();
         int randomColor = ColorManager.Instance.GetNextColorIndex();
         transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().material.SetColor("_Color", ColorManager.Instance.colorDataSO.ColorDatas[randomColor].color);
-        BotColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
-        StartCoroutine(ChangeStateRandomly());
+        BotData.botColor = ColorManager.Instance.colorDataSO.ColorDatas[randomColor].colorName;
+        botData.Zone = 0;
     }
     private void Update()
     {
@@ -33,48 +41,46 @@ public class Bot : Character
         currentState = newState;
         currentState?.OnEnter();
     }
-    IEnumerator ChangeStateRandomly()
-    {
-        while (true)
-        {
-            yield return new WaitForSeconds(1f);
 
-            SetState(new IdleState(this));
-            yield return new WaitForSeconds(1f);
-
-            SetState(new PickUpBrickState(this));
-
-
-        }
-    }
     private void OnTriggerEnter(Collider other)
     {
         Brick brick = other.transform.GetComponent<Brick>();
-
+       
+        if (other.CompareTag(Tag.GROUND))
+        {
+            if (other.name == "Zone1")
+            {
+                botData.Zone = 0;
+                Debug.Log($"Zone 1 botData.Zone {botData.Zone}");
+                currentZone= other.GetComponent<Zone>();
+            }
+            else if (other.name == "Zone2")
+            {
+                botData.Zone = 1;
+                Debug.Log($"Zone 2 botData.Zone {botData.Zone}");
+                currentZone = other.GetComponent<Zone>();
+            }
+        }
         if (other.CompareTag(Tag.BRICK))
         {
-            if (brick.colorName == botColor)
+            if (brick.colorName == BotData.botColor)
             {
                 BrickGenerators[0].MakeRemovedBrick(brick.brickNumber);
                 UpdateBotBrick(brick.color);
                 Destroy(other.gameObject);
-
             }
+
         }
     }
     public void UpdateBotBrick(Color color)
     {
         Transform brick = Instantiate(brickPrefab, brickHolder);
-        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
+        Vector3 brickPosition = new Vector3(0, 0 + (BotData.totalBrickCollected * 0.2f), 0);
         brick.localPosition = brickPosition;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", color);
+        BotData.totalBrickCollected++;
         totalBrick++;
     }
-    private void OnDrawGizmos()
-    {
 
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 5f);
-    }
-
+   
 }

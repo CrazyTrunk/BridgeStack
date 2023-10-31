@@ -4,9 +4,9 @@ using UnityEngine;
 public class PickUpBrickState : IState
 {
     private Bot bot;
-    private Collider[] detectedObjects = new Collider[30];
+    private Collider[] detectedObjects = new Collider[100];
     private Transform targetBrick;
-    float radius = 5f;
+    float radius = 10f;
     public PickUpBrickState(Bot bot)
     {
         this.bot = bot;
@@ -14,18 +14,31 @@ public class PickUpBrickState : IState
     public void OnEnter()
     {
         bot.ChangeAnim("run");
+        if(bot.currentZone != null)
+        {
+            bot.Agent.isStopped = false;
+
+            bot.Agent.SetDestination(bot.currentZone.transform.position);
+        }
     }
 
     public void OnExecute()
     {
-        targetBrick = FindNearestBrickOfSameColor();
-        if (targetBrick != null)
+        if (targetBrick == null || Vector3.Distance(bot.Agent.transform.position, targetBrick.position) < 1f)
         {
-            bot.Agent.SetDestination(targetBrick.position);
+            targetBrick = FindNearestBrickOfSameColor();
+            if (targetBrick != null)
+            {
+                bot.Agent.SetDestination(targetBrick.position);
+            }
+            else
+            {
+                radius += 2;
+            }
         }
-        else
+        if(bot.BotData.totalBrickCollected >= 1)
         {
-            radius += 2;
+            bot.SetState(new PlaceBrickOnBridgeState(bot));
         }
     }
 
@@ -42,7 +55,7 @@ public class PickUpBrickState : IState
             if (detectedObjects[i].CompareTag(Tag.BRICK))
             {
                 Brick brick = detectedObjects[i].GetComponent<Brick>();
-                if(brick.colorName == bot.BotColor)
+                if(brick.colorName == bot.BotData.botColor)
                 {
                     return detectedObjects[i].transform;
                 }
