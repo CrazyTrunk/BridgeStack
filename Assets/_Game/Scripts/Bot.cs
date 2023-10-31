@@ -65,9 +65,9 @@ public class Bot : Character
         {
             if (brick.colorName == BotData.botColor)
             {
+                Destroy(other.gameObject);
                 BrickGenerators[0].MakeRemovedBrick(brick.brickNumber);
                 UpdateBotBrick(brick.color);
-                Destroy(other.gameObject);
             }
 
         }
@@ -75,7 +75,7 @@ public class Bot : Character
     public void UpdateBotBrick(Color color)
     {
         Transform brick = Instantiate(brickPrefab, brickHolder);
-        Vector3 brickPosition = new Vector3(0, 0 + (BotData.totalBrickCollected * 0.2f), 0);
+        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
         brick.localPosition = brickPosition;
         brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", color);
         BotData.totalBrickCollected++;

@@ -20,14 +20,15 @@ public class PlaceBrickOnBridgeState : IState
     {
         if (!CheckBridgeStair())
         {
-            bot.SetState(new PickUpBrickState(bot));
+            bot.Agent.isStopped = true;
             return;
         }
-        PathWay pathway = bot.currentZone.Bridges[0].GetComponent<PathWay>();
-        GameObject go = bot.currentZone.Bridges[0];
+
 
         if (bot.totalBrick > 0)
         {
+            PathWay pathway = bot.currentZone.Bridges[0].GetComponent<PathWay>();
+            GameObject go = bot.currentZone.Bridges[0];
             GameObject doorObject = go.GetComponentsInChildren<Transform>()
             .FirstOrDefault(child => child.CompareTag("Door"))?.gameObject;
 
@@ -35,6 +36,13 @@ public class PlaceBrickOnBridgeState : IState
             {
                 bot.Agent.SetDestination(doorObject.transform.position);
             }
+        }
+        else
+        {
+            RegenerateBrick(bot.BotData.Zone);
+            bot.Agent.SetDestination(bot.currentZone.transform.position);
+            bot.SetState(new PickUpBrickState(bot));
+
         }
     }
 
@@ -48,10 +56,7 @@ public class PlaceBrickOnBridgeState : IState
         if (Physics.Raycast(bot.brickPlacer.position + Vector3.up * 2f, Vector3.down, out hit, Mathf.Infinity, bot.StairLayer))
         {
             StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
-            if (bot.totalBrick == 0)
-            {
-                RegenerateBrick(bot.BotData.Zone);
-            }
+
             if ((bot.totalBrick > 0 && brick.colorName == GameColor.NoColor) || (bot.totalBrick > 0 && brick.colorName != bot.BotData.botColor))
             {
                 ColorData currentPlayerColorData = FindColorDataByGameColor(bot.BotData.botColor);
@@ -61,15 +66,14 @@ public class PlaceBrickOnBridgeState : IState
                 brick.brickRenderer.enabled = true;
                 brick.pathway.BrickPlaced++;
                 bot.RemoveBrick();
-                if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
-                {
-                    brick.pathway.OpenDoor();
-                }
+                //if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
+                //{
+                //    brick.pathway.OpenDoor();
+                //}
                 return true;
             }
             if ((brick.colorName == GameColor.NoColor && bot.totalBrick == 0) || (bot.totalBrick == 0 && brick.colorName != bot.BotData.botColor))
             {
-                bot.Agent.isStopped = true;
                 return false;
             }
         }

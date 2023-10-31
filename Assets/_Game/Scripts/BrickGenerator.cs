@@ -84,7 +84,6 @@ public class BrickGenerator : MonoBehaviour
                 createdBrick.GetComponent<Brick>().brickNumber = i;
                 createdBrick.GetComponent<Brick>().color = BrickSpawnDatas[i].color;
                 BrickSpawnDatas[i].removed = false;
-                return;
             }
         }
     }

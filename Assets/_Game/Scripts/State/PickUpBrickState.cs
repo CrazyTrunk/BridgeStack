@@ -4,9 +4,8 @@ using UnityEngine;
 public class PickUpBrickState : IState
 {
     private Bot bot;
-    private Collider[] detectedObjects = new Collider[100];
     private Transform targetBrick;
-    float radius = 10f;
+    float radius = 5f;
     public PickUpBrickState(Bot bot)
     {
         this.bot = bot;
@@ -14,12 +13,8 @@ public class PickUpBrickState : IState
     public void OnEnter()
     {
         bot.ChangeAnim("run");
-        if(bot.currentZone != null)
-        {
-            bot.Agent.isStopped = false;
+        bot.Agent.isStopped = false;
 
-            bot.Agent.SetDestination(bot.currentZone.transform.position);
-        }
     }
 
     public void OnExecute()
@@ -36,7 +31,7 @@ public class PickUpBrickState : IState
                 radius += 2;
             }
         }
-        if(bot.BotData.totalBrickCollected >= 1)
+        if(bot.totalBrick >= 2)
         {
             bot.SetState(new PlaceBrickOnBridgeState(bot));
         }
@@ -49,15 +44,17 @@ public class PickUpBrickState : IState
     }
     private Transform FindNearestBrickOfSameColor()
     {
-        int numColliders = Physics.OverlapSphereNonAlloc(bot.Agent.transform.position, radius, detectedObjects);
-        for (int i = 0; i < numColliders; i++)
+        //int numColliders = Physics.OverlapSphereNonAlloc(bot.Agent.transform.position, radius, detectedObjects);
+        Collider[] numColliders = Physics.OverlapSphere(bot.Agent.transform.position, radius);
+
+        for (int i = 0; i < numColliders.Length; i++)
         {
-            if (detectedObjects[i].CompareTag(Tag.BRICK))
+            if (numColliders[i].CompareTag(Tag.BRICK))
             {
-                Brick brick = detectedObjects[i].GetComponent<Brick>();
+                Brick brick = numColliders[i].GetComponent<Brick>();
                 if(brick.colorName == bot.BotData.botColor)
                 {
-                    return detectedObjects[i].transform;
+                    return numColliders[i].transform;
                 }
             }
         }
