@@ -64,12 +64,7 @@ public class PlaceBrickOnBridgeState : IState
                 brick.colorName = currentPlayerColorData.colorName;
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
-                brick.pathway.BrickPlaced++;
                 bot.RemoveBrick();
-                //if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
-                //{
-                //    brick.pathway.OpenDoor();
-                //}
                 return true;
             }
             if ((brick.colorName == GameColor.NoColor && bot.totalBrick == 0) || (bot.totalBrick == 0 && brick.colorName != bot.BotData.botColor))

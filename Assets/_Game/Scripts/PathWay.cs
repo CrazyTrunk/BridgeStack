@@ -4,16 +4,39 @@ using UnityEngine;
 
 public class PathWay : MonoBehaviour
 {
-    [SerializeField] private int totalStair;
     [SerializeField] private Transform door;
-    private int brickPlaced;
-
-    public int BrickPlaced { get => brickPlaced; set => brickPlaced = value; }
-    public int TotalStair { get => totalStair; set => totalStair = value; }
-
+    [SerializeField] public StairBrick[] stairBricks;
     public void OpenDoor()
     {
         door.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         door.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+    }
+    private void OnEnable()
+    {
+        StairBrick.OnStairBrickChanged += CheckAndOpenDoor;
+    }
+
+    private void OnDisable()
+    {
+        StairBrick.OnStairBrickChanged -= CheckAndOpenDoor;
+    }
+
+    private void CheckAndOpenDoor(StairBrick brick)
+    {
+        if (AllStairBricksChangedColor())
+        {
+            OpenDoor();
+        }
+    }
+    public bool AllStairBricksChangedColor()
+    {
+        foreach (StairBrick brick in stairBricks)
+        {
+            if (brick.colorName == GameColor.NoColor)
+            {
+                return false; 
+            }
+        }
+        return true; 
     }
 }

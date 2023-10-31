@@ -75,12 +75,8 @@ public class Player : Character
                 brick.colorName = currentPlayerColorData.colorName;
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
-                brick.pathway.BrickPlaced++;
                 base.RemoveBrick();
-                if (brick.pathway.BrickPlaced == brick.pathway.TotalStair)
-                {
-                    brick.pathway.OpenDoor();
-                }
+                brick.SetColor(currentPlayerColorData.colorName);
                 return true;
             }
             if ((brick.colorName == GameColor.NoColor && totalBrick == 0) || (totalBrick == 0 && brick.colorName != playerDataSO.PlayerData.playerColor))
