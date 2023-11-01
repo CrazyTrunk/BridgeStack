@@ -7,9 +7,9 @@ public class BrickGenerator : MonoBehaviour
     private Transform BrickPrefab;
     [SerializeField] public List<BrickSpawnData> BrickSpawnDatas;
     //[SerializeField] public ColorDataSO colorDataSO;
-    private int length = 24;// number of bricks
+    private int length = 48;// number of bricks
     private Vector3 position;// each Brick Pos
-    private int line = 6;
+    private int line = 8;
     private int step = 2;
 
     float zPosInit;

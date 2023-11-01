@@ -5455,7 +5455,7 @@ Transform:
   m_GameObject: {fileID: 1131015163}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 6.49, y: 6.21, z: 35.07}
+  m_LocalPosition: {x: 6.49, y: 6.23, z: 34.75}
   m_LocalScale: {x: 10, y: 0.5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8483,7 +8483,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703056895}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8554,7 +8554,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   door: {fileID: 1899402722}
-  stairBricks: []
+  stairBricks:
+  - {fileID: 1151126908}
+  - {fileID: 1295745799}
+  - {fileID: 1882495817}
+  - {fileID: 777663495}
+  - {fileID: 126683026}
+  - {fileID: 353703161}
+  - {fileID: 1537257996}
+  - {fileID: 400020792}
+  - {fileID: 374381381}
+  - {fileID: 1801221613}
+  - {fileID: 22071067}
 --- !u!1001 &1721570167
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9379,7 +9390,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841978601}
-  m_Enabled: 0
+  m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -11595,7 +11606,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.2
-  m_Speed: 7
+  m_Speed: 5
   m_Acceleration: 60
   avoidancePriority: 50
   m_AngularSpeed: 120

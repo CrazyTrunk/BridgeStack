@@ -1,11 +1,11 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class PickUpBrickState : IState
 {
     private Bot bot;
     private Transform targetBrick;
     float radius = 5f;
+    float brickRange = 1;
     public PickUpBrickState(Bot bot)
     {
         this.bot = bot;
@@ -14,12 +14,12 @@ public class PickUpBrickState : IState
     {
         bot.ChangeAnim("run");
         bot.Agent.isStopped = false;
-
+        brickRange = Random.Range(1, 5);
     }
 
     public void OnExecute()
     {
-        if (targetBrick == null || Vector3.Distance(bot.Agent.transform.position, targetBrick.position) < 1f)
+        if (targetBrick == null || Vector3.Distance(bot.Agent.transform.position, targetBrick.position) < 0.1f)
         {
             targetBrick = FindNearestBrickOfSameColor();
             if (targetBrick != null)
@@ -31,7 +31,7 @@ public class PickUpBrickState : IState
                 radius += 2;
             }
         }
-        if(bot.totalBrick >= 2)
+        if(bot.totalBrick >= brickRange)
         {
             bot.SetState(new PlaceBrickOnBridgeState(bot));
         }

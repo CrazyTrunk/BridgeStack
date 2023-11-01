@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Unity.AI.Navigation;
 using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Progress;
@@ -35,14 +36,18 @@ public class PlaceBrickOnBridgeState : IState
             if (doorObject != null)
             {
                 bot.Agent.SetDestination(doorObject.transform.position);
+                if (Vector3.Distance(bot.Agent.transform.position, doorObject.transform.position) < 0.1f)
+                {
+                    bot.SetState(new PickUpBrickState(bot));
+                }
             }
         }
         else
         {
             RegenerateBrick(bot.BotData.Zone);
             bot.Agent.SetDestination(bot.currentZone.transform.position);
+ 
             bot.SetState(new PickUpBrickState(bot));
-
         }
     }
 
@@ -65,6 +70,7 @@ public class PlaceBrickOnBridgeState : IState
                 brick.color = currentPlayerColorData.color;
                 brick.brickRenderer.enabled = true;
                 bot.RemoveBrick();
+                brick.SetColor(currentPlayerColorData.colorName);
                 return true;
             }
             if ((brick.colorName == GameColor.NoColor && bot.totalBrick == 0) || (bot.totalBrick == 0 && brick.colorName != bot.BotData.botColor))
