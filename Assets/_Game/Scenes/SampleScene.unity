@@ -1043,6 +1043,7 @@ MonoBehaviour:
   Bridges:
   - {fileID: 1019423081}
   - {fileID: 931342451}
+  ZoneID: 0
 --- !u!1 &201026934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1210,7 +1211,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 214969722}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -2889,7 +2890,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539940948}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8435,6 +8436,7 @@ MonoBehaviour:
   Bridges:
   - {fileID: 789338603}
   - {fileID: 141607650}
+  ZoneID: 0
 --- !u!1 &1703056895
 GameObject:
   m_ObjectHideFlags: 0
