@@ -5,4 +5,5 @@ using UnityEngine;
 public class Zone : MonoBehaviour
 {
     [SerializeField]public GameObject[] Bridges;
+    public int ZoneID;
 }

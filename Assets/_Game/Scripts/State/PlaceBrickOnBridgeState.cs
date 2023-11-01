@@ -41,12 +41,15 @@ public class PlaceBrickOnBridgeState : IState
                     bot.SetState(new PickUpBrickState(bot));
                 }
             }
+            else
+            {
+
+            }
         }
         else
         {
             RegenerateBrick(bot.BotData.Zone);
             bot.Agent.SetDestination(bot.currentZone.transform.position);
- 
             bot.SetState(new PickUpBrickState(bot));
         }
     }

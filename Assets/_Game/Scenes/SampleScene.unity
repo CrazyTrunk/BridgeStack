@@ -998,6 +998,7 @@ MonoBehaviour:
   Bridges:
   - {fileID: 1019423081}
   - {fileID: 931342451}
+  ZoneID: 0
 --- !u!1 &190414513
 GameObject:
   m_ObjectHideFlags: 0
@@ -7373,7 +7374,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1540940962}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8105,6 +8106,7 @@ MonoBehaviour:
   Bridges:
   - {fileID: 1463034195}
   - {fileID: 2004720090}
+  ZoneID: 1
 --- !u!1 &1675740473
 GameObject:
   m_ObjectHideFlags: 0
@@ -8341,7 +8343,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1703056895}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -8766,7 +8768,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1775875713}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -9159,7 +9161,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1841978601}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

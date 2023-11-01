@@ -47,30 +47,12 @@ public class Bot : Character
     private void OnTriggerEnter(Collider other)
     {
         Brick brick = other.transform.GetComponent<Brick>();
-       
-        if (other.CompareTag(Tag.GROUND))
-        {
-            if (other.name == "Zone1")
-            {
-                botData.Zone = 0;
-                Debug.Log($"Zone 1 botData.Zone {botData.Zone}");
-                currentZone= other.GetComponent<Zone>();
-            }
-            else if (other.name == "Zone2")
-            {
-                botData.Zone = 1;
-                Debug.Log($"Zone 2 botData.Zone {botData.Zone}");
-                currentZone = other.GetComponent<Zone>();
-                SetState(new PlaceBrickOnBridgeState(this));
-
-            }
-        }
         if (other.CompareTag(Tag.BRICK))
         {
             if (brick.colorName == BotData.botColor)
             {
                 Destroy(other.gameObject);
-                BrickGenerators[0].MakeRemovedBrick(brick.brickNumber);
+                BrickGenerators[botData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdateBotBrick(brick.color);
             }
 
@@ -97,5 +79,17 @@ public class Bot : Character
         }
 
     }
-
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag(Tag.GROUND))
+        {
+            Zone zone = collision.collider.GetComponent<Zone>();
+            if (zone != null)
+            {
+                botData.Zone = zone.ZoneID;
+                currentZone = collision.collider.GetComponent<Zone>();
+                SetState(new PlaceBrickOnBridgeState(this));
+            }
+        }
+    }
 }

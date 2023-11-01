@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -153,13 +154,10 @@ public class Player : Character
     {
         if (collision.collider.CompareTag(Tag.GROUND))
         {
-            if (collision.collider.name == "Zone1")
+            Zone zone = collision.collider.GetComponent<Zone>();
+            if (zone != null)
             {
-                playerDataSO.PlayerData.Zone = 0;
-            }
-            else if (collision.collider.name == "Zone2")
-            {
-                playerDataSO.PlayerData.Zone = 1;
+                playerDataSO.PlayerData.Zone = zone.ZoneID;
             }
         }
     }
