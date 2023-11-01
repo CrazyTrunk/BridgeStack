@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
 
 public class Bot : Character
 {
@@ -16,7 +15,6 @@ public class Bot : Character
     public Zone currentZone;
     [SerializeField] private LayerMask stairLayer;
     public LayerMask StairLayer { get => stairLayer; set => stairLayer = value; }
-    private bool hasExitedDoor = false;
 
     public override void Start()
     {
@@ -47,6 +45,22 @@ public class Bot : Character
     private void OnTriggerEnter(Collider other)
     {
         Brick brick = other.transform.GetComponent<Brick>();
+       
+        if (other.CompareTag(Tag.GROUND))
+        {
+            if (other.name == "Zone1")
+            {
+                botData.Zone = 0;
+                Debug.Log($"Zone 1 botData.Zone {botData.Zone}");
+                currentZone= other.GetComponent<Zone>();
+            }
+            else if (other.name == "Zone2")
+            {
+                botData.Zone = 1;
+                Debug.Log($"Zone 2 botData.Zone {botData.Zone}");
+                currentZone = other.GetComponent<Zone>();
+            }
+        }
         if (other.CompareTag(Tag.BRICK))
         {
             if (brick.colorName == BotData.botColor)
@@ -67,29 +81,6 @@ public class Bot : Character
         BotData.totalBrickCollected++;
         totalBrick++;
     }
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(Tag.DOOR) && !hasExitedDoor)
-        {
-            hasExitedDoor = true;
 
-            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-            BrickGenerators[botData.Zone].SpawnBricks();
-        }
-
-    }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.collider.CompareTag(Tag.GROUND))
-        {
-            Zone zone = collision.collider.GetComponent<Zone>();
-            if (zone != null)
-            {
-                botData.Zone = zone.ZoneID;
-                currentZone = collision.collider.GetComponent<Zone>();
-                SetState(new PlaceBrickOnBridgeState(this));
-            }
-        }
-    }
+   
 }
