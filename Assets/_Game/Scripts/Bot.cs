@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class Bot : Character
 {
@@ -15,6 +16,7 @@ public class Bot : Character
     public Zone currentZone;
     [SerializeField] private LayerMask stairLayer;
     public LayerMask StairLayer { get => stairLayer; set => stairLayer = value; }
+    private bool hasExitedDoor = false;
 
     public override void Start()
     {
@@ -59,6 +61,8 @@ public class Bot : Character
                 botData.Zone = 1;
                 Debug.Log($"Zone 2 botData.Zone {botData.Zone}");
                 currentZone = other.GetComponent<Zone>();
+                SetState(new PlaceBrickOnBridgeState(this));
+
             }
         }
         if (other.CompareTag(Tag.BRICK))
@@ -81,6 +85,17 @@ public class Bot : Character
         BotData.totalBrickCollected++;
         totalBrick++;
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tag.DOOR) && !hasExitedDoor)
+        {
+            hasExitedDoor = true;
 
-   
+            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
+            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+            BrickGenerators[botData.Zone].SpawnBricks();
+        }
+
+    }
+
 }

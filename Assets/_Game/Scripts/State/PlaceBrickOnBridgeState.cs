@@ -28,7 +28,7 @@ public class PlaceBrickOnBridgeState : IState
 
         if (bot.totalBrick > 0)
         {
-            PathWay pathway = bot.currentZone.Bridges[0].GetComponent<PathWay>();
+            bot.Agent.isStopped = false;
             GameObject go = bot.currentZone.Bridges[0];
             GameObject doorObject = go.GetComponentsInChildren<Transform>()
             .FirstOrDefault(child => child.CompareTag("Door"))?.gameObject;
