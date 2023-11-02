@@ -1,25 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.AI.Navigation;
+using Unity.VisualScripting.Antlr3.Runtime;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class PathWay : MonoBehaviour
 {
-    [SerializeField] private Transform door;
+    [SerializeField] private Door door;
     [SerializeField] public StairBrick[] stairBricks;
-    public void OpenDoor()
-    {
-        door.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
-        door.gameObject.GetComponent<BoxCollider>().isTrigger = true;
-        //UpdateNavMesh();
-    }
-    //void UpdateNavMesh()
-    //{
-    //    NavMeshSurface surface = FindFirstObjectByType<NavMeshSurface>(); 
-    //    if (surface == null) return;
 
-    //    surface.BuildNavMesh();
-    //}
+
     private void OnEnable()
     {
         StairBrick.OnStairBrickChanged += CheckAndOpenDoor;
@@ -34,7 +25,7 @@ public class PathWay : MonoBehaviour
     {
         if (AllStairBricksChangedColor(brick.colorName))
         {
-            OpenDoor();
+            door.OpenDoor();
         }
     }
     public bool AllStairBricksChangedColor(GameColor color)

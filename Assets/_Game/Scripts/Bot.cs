@@ -11,8 +11,9 @@ public class Bot : Character
 
     public NavMeshAgent Agent { get => agent; set => agent = value; }
     public BotData BotData { get => botData; set => botData = value; }
+    private bool hasExitedDoor = false;
 
-    public Zone currentZone;
+    [SerializeField]public Zone currentZone;
     [SerializeField] private LayerMask stairLayer;
     public LayerMask StairLayer { get => stairLayer; set => stairLayer = value; }
 
@@ -41,26 +42,28 @@ public class Bot : Character
         currentState = newState;
         currentState?.OnEnter();
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag(Tag.GROUND))
+        {
+            Zone zone = other.GetComponent<Zone>();
 
+            if (zone != null)
+            {
+                currentZone = zone;
+                botData.Zone = zone.ZoneID;
+                if (!zone.IsSpawned)
+                {
+                    zone.IsSpawned = true;
+                    BrickGenerators[botData.Zone].SpawnBricks();
+                }
+            }
+        }
+    }
     private void OnTriggerEnter(Collider other)
     {
         Brick brick = other.transform.GetComponent<Brick>();
-       
-        if (other.CompareTag(Tag.GROUND))
-        {
-            if (other.name == "Zone1")
-            {
-                botData.Zone = 0;
-                Debug.Log($"Zone 1 botData.Zone {botData.Zone}");
-                currentZone= other.GetComponent<Zone>();
-            }
-            else if (other.name == "Zone2")
-            {
-                botData.Zone = 1;
-                Debug.Log($"Zone 2 botData.Zone {botData.Zone}");
-                currentZone = other.GetComponent<Zone>();
-            }
-        }
+
         if (other.CompareTag(Tag.BRICK))
         {
             if (brick.colorName == BotData.botColor)
@@ -69,7 +72,11 @@ public class Bot : Character
                 BrickGenerators[botData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdateBotBrick(brick.color);
             }
-
+        }
+        else if (other.CompareTag(Tag.DOOR))
+        {
+            // Reset the flag when the bot enters a new door
+            hasExitedDoor = false;
         }
     }
     public void UpdateBotBrick(Color color)
@@ -81,6 +88,19 @@ public class Bot : Character
         BotData.totalBrickCollected++;
         totalBrick++;
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag(Tag.DOOR) && !hasExitedDoor)
+        {
+            hasExitedDoor = true;
 
-   
+            Door door = other.transform.GetComponent<Door>();
+            if (door != null)
+            {
+                door.CloseDoor();
+            }
+        }
+
+    }
+
 }

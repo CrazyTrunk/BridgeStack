@@ -14,7 +14,7 @@ public class PickUpBrickState : IState
     {
         bot.ChangeAnim("run");
         bot.Agent.isStopped = false;
-        brickRange = Random.Range(1, 5);
+        brickRange = Random.Range(3, 5);
     }
 
     public void OnExecute()

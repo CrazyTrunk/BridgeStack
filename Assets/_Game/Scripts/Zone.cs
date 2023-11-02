@@ -6,4 +6,5 @@ public class Zone : MonoBehaviour
 {
     [SerializeField]public GameObject[] Bridges;
     public int ZoneID;
+    public bool IsSpawned = false;
 }

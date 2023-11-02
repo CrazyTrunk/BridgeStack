@@ -26,10 +26,6 @@ public class Character : MonoBehaviour
     public void Awake()
     {
         BrickGenerators = FindObjectsOfType<BrickGenerator>().OrderBy(generator => generator.name).ToArray();
-        if (this is Player)
-        {
-            BrickGenerators[0].SpawnBricks();
-        }
     }
     public virtual void Start()
     {

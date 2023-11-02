@@ -4,6 +4,7 @@ using System.Linq;
 using System.Xml.Serialization;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -39,7 +40,7 @@ public class Player : Character
     }
     private void Update()
     {
-        if(inputManager.MovementAmount.x != 0 || inputManager.MovementAmount.y != 0)
+        if (inputManager.MovementAmount.x != 0 || inputManager.MovementAmount.y != 0)
             MovePlayer();
         else
             ChangeAnim("idle");
@@ -94,8 +95,6 @@ public class Player : Character
         BrickGenerators[zone].RegenerateBricks(playerDataSO.PlayerData.playerColor);
     }
 
-
-
     private void MovePlayer()
     {
 
@@ -104,7 +103,7 @@ public class Player : Character
         moveMovement = Speed * Time.deltaTime * new Vector3(inputManager.MovementAmount.x, 0, inputManager.MovementAmount.y);
         if (IsFacingWall(moveMovement))
         {
-            return; 
+            return;
         }
         if (moveMovement.magnitude > 0)
         {
@@ -144,9 +143,11 @@ public class Player : Character
         {
             hasExitedDoor = true;
 
-            other.transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
-            other.gameObject.GetComponent<BoxCollider>().isTrigger = false;
-            BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
+            Door door = other.transform.GetComponent<Door>();
+            if (door != null)
+            {
+                door.CloseDoor();
+            }
         }
 
     }
@@ -158,7 +159,13 @@ public class Player : Character
             if (zone != null)
             {
                 playerDataSO.PlayerData.Zone = zone.ZoneID;
+                if (!zone.IsSpawned)
+                {
+                    zone.IsSpawned = true;
+                    BrickGenerators[playerDataSO.PlayerData.Zone].SpawnBricks();
+                }
             }
+            hasExitedDoor = false;
         }
     }
     private void UpdatePlayerBrick(Color brickcolor)
