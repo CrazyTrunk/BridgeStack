@@ -223,7 +223,7 @@ Transform:
   m_GameObject: {fileID: 22071062}
   serializedVersion: 2
   m_LocalRotation: {x: -0.17364825, y: -0, z: -0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.01, z: 0.13}
   m_LocalScale: {x: 0.9, y: 0.3, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -245,6 +245,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 22071064}
+  groupId: 0
 --- !u!1 &27909480
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +294,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &39643847
 RectTransform:
   m_ObjectHideFlags: 0
@@ -500,6 +501,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 71690632}
+  groupId: 5
 --- !u!65 &71690631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -867,6 +869,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 126683023}
+  groupId: 0
 --- !u!1 &131930540
 GameObject:
   m_ObjectHideFlags: 0
@@ -987,6 +990,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 154910617}
+  groupId: 4
 --- !u!65 &154910616
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1492,6 +1496,7 @@ MonoBehaviour:
   - {fileID: 1477900184}
   - {fileID: 1459574907}
   - {fileID: 768193045}
+  groupId: 4
 --- !u!1 &228188950
 GameObject:
   m_ObjectHideFlags: 0
@@ -1543,6 +1548,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 228188954}
+  groupId: 6
 --- !u!65 &228188953
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1698,6 +1704,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 296168862}
+  groupId: 1
 --- !u!65 &296168861
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1886,6 +1893,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 311189633}
+  groupId: 1
 --- !u!65 &311189632
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2008,6 +2016,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 324301810}
+  groupId: 1
 --- !u!65 &324301809
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2130,6 +2139,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 325753883}
+  groupId: 3
 --- !u!65 &325753882
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2252,6 +2262,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 327036030}
+  groupId: 6
 --- !u!65 &327036029
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2341,7 +2352,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (4)
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_IsActive
@@ -2575,6 +2586,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 353703158}
+  groupId: 0
 --- !u!1001 &361379543
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2692,6 +2704,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 368587712}
+  groupId: 3
 --- !u!65 &368587711
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2885,6 +2898,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 374381378}
+  groupId: 0
 --- !u!1 &378477115
 GameObject:
   m_ObjectHideFlags: 0
@@ -2936,6 +2950,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 378477119}
+  groupId: 3
 --- !u!65 &378477118
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3129,6 +3144,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 400020789}
+  groupId: 0
 --- !u!1 &401167110
 GameObject:
   m_ObjectHideFlags: 0
@@ -3180,6 +3196,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 401167114}
+  groupId: 6
 --- !u!65 &401167113
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3442,6 +3459,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 418197725}
+  groupId: 6
 --- !u!65 &418197724
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3531,7 +3549,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (3)
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_IsActive
@@ -3660,6 +3678,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 428434553}
+  groupId: 4
 --- !u!65 &428434552
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3782,6 +3801,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 456197704}
+  groupId: 4
 --- !u!65 &456197703
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3871,7 +3891,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (1)
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_IsActive
@@ -4199,6 +4219,7 @@ MonoBehaviour:
   - {fileID: 1352661950}
   - {fileID: 1554380258}
   - {fileID: 720588734}
+  groupId: 5
 --- !u!1001 &582414111
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4557,6 +4578,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 663167593}
+  groupId: 6
 --- !u!65 &663167592
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4979,6 +5001,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 713868026}
+  groupId: 3
 --- !u!65 &713868025
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5101,6 +5124,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 720588736}
+  groupId: 5
 --- !u!65 &720588735
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5232,6 +5256,7 @@ MonoBehaviour:
   - {fileID: 378477117}
   - {fileID: 713868024}
   - {fileID: 1230211884}
+  groupId: 3
 --- !u!65 &732603073
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5506,6 +5531,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 751198095}
+  groupId: 1
 --- !u!65 &751198094
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5694,6 +5720,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 768193047}
+  groupId: 4
 --- !u!65 &768193046
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5816,6 +5843,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 769046761}
+  groupId: 5
 --- !u!65 &769046760
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6153,6 +6181,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 777663492}
+  groupId: 0
 --- !u!1 &782168221
 GameObject:
   m_ObjectHideFlags: 0
@@ -6315,6 +6344,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 831381748}
+  groupId: 3
 --- !u!65 &831381747
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6437,6 +6467,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 853156106}
+  groupId: 4
 --- !u!65 &853156105
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6625,6 +6656,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 899272243}
+  groupId: 4
 --- !u!65 &899272242
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6747,6 +6779,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 907761800}
+  groupId: 5
 --- !u!65 &907761799
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -6905,6 +6938,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 942641073}
+  groupId: 4
 --- !u!65 &942641072
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7027,6 +7061,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 947237828}
+  groupId: 3
 --- !u!65 &947237827
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7215,6 +7250,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 953060001}
+  groupId: 5
 --- !u!65 &953060000
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7337,6 +7373,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 957059939}
+  groupId: 1
 --- !u!65 &957059938
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7699,7 +7736,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (5)
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_IsActive
@@ -8278,6 +8315,7 @@ MonoBehaviour:
   - {fileID: 1669307477}
   - {fileID: 401167112}
   - {fileID: 1899721188}
+  groupId: 6
 --- !u!65 &1144123306
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8471,6 +8509,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 1151126905}
+  groupId: 0
 --- !u!1001 &1163255389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8588,6 +8627,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 1164095830}
+  groupId: 5
 --- !u!65 &1164095829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8871,6 +8911,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 1228061853}
+  groupId: 1
 --- !u!65 &1228061852
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -8993,6 +9034,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 1230211886}
+  groupId: 3
 --- !u!65 &1230211885
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9115,6 +9157,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 1237936584}
+  groupId: 4
 --- !u!65 &1237936583
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9539,6 +9582,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 1295745796}
+  groupId: 0
 --- !u!1 &1309069505
 GameObject:
   m_ObjectHideFlags: 0
@@ -9590,6 +9634,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 1309069509}
+  groupId: 1
 --- !u!65 &1309069508
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9712,6 +9757,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 1329034133}
+  groupId: 6
 --- !u!65 &1329034132
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9834,6 +9880,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 1345712324}
+  groupId: 6
 --- !u!65 &1345712323
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -9956,6 +10003,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 1352661952}
+  groupId: 5
 --- !u!65 &1352661951
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10078,6 +10126,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 1352856721}
+  groupId: 1
 --- !u!65 &1352856720
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10200,6 +10249,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 1363010588}
+  groupId: 6
 --- !u!65 &1363010587
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10322,6 +10372,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 1387630388}
+  groupId: 3
 --- !u!65 &1387630387
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10444,6 +10495,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 1459574909}
+  groupId: 4
 --- !u!65 &1459574908
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -10633,6 +10685,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 1477900186}
+  groupId: 4
 --- !u!65 &1477900185
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11098,6 +11151,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 6
   brickRenderer: {fileID: 1537257993}
+  groupId: 0
 --- !u!1001 &1546404110
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11356,6 +11410,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 1554380260}
+  groupId: 5
 --- !u!65 &1554380259
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11511,7 +11566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_Name
-      value: Door
+      value: Door (2)
       objectReference: {fileID: 0}
     - target: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
       propertyPath: m_IsActive
@@ -11757,6 +11812,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 1621217472}
+  groupId: 5
 --- !u!65 &1621217471
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11879,6 +11935,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 1624847992}
+  groupId: 1
 --- !u!65 &1624847991
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12196,6 +12253,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 8
   brickRenderer: {fileID: 1669307479}
+  groupId: 6
 --- !u!65 &1669307478
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12318,6 +12376,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 7
   brickRenderer: {fileID: 1683111311}
+  groupId: 3
 --- !u!65 &1683111310
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12520,6 +12579,7 @@ MonoBehaviour:
   - {fileID: 374381381}
   - {fileID: 1801221613}
   - {fileID: 22071067}
+  groupId: 0
 --- !u!1 &1713460628
 GameObject:
   m_ObjectHideFlags: 0
@@ -12571,6 +12631,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 3
   brickRenderer: {fileID: 1713460632}
+  groupId: 3
 --- !u!65 &1713460631
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12759,6 +12820,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 1734131893}
+  groupId: 1
 --- !u!65 &1734131892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -12914,6 +12976,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 1760976628}
+  groupId: 5
 --- !u!65 &1760976627
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13036,6 +13099,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 0
   brickRenderer: {fileID: 1776252859}
+  groupId: 1
 --- !u!65 &1776252858
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13200,6 +13264,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 1787818077}
+  groupId: 5
 --- !u!65 &1787818076
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13402,7 +13467,7 @@ Transform:
   m_GameObject: {fileID: 1801221608}
   serializedVersion: 2
   m_LocalRotation: {x: -0.17364825, y: -0, z: -0, w: 0.9848078}
-  m_LocalPosition: {x: 0, y: -0.32999992, z: -0.72999954}
+  m_LocalPosition: {x: 0, y: -0.32999992, z: -0.69}
   m_LocalScale: {x: 0.9, y: 0.3, z: 0.8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13424,6 +13489,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 9
   brickRenderer: {fileID: 1801221610}
+  groupId: 0
 --- !u!1 &1807658544 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5813442554276397839, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
@@ -13579,6 +13645,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 1
   brickRenderer: {fileID: 1823632681}
+  groupId: 6
 --- !u!65 &1823632680
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13913,6 +13980,7 @@ MonoBehaviour:
   - {fileID: 1228061851}
   - {fileID: 1734131891}
   - {fileID: 957059937}
+  groupId: 1
 --- !u!1001 &1851523262
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13994,7 +14062,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1861081515
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14202,6 +14270,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 2
   brickRenderer: {fileID: 1882495814}
+  groupId: 0
 --- !u!4 &1899402722 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6622173401064184245, guid: a5f14ec959e94ee4f96c0b1ecef9f0cc, type: 3}
@@ -14287,6 +14356,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 10
   brickRenderer: {fileID: 1899721190}
+  groupId: 6
 --- !u!65 &1899721189
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -14656,6 +14726,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 4
   brickRenderer: {fileID: 1993116313}
+  groupId: 4
 --- !u!65 &1993116312
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15103,6 +15174,7 @@ MonoBehaviour:
   color: {r: 1, g: 1, b: 1, a: 0}
   brickNumber: 5
   brickRenderer: {fileID: 2103058249}
+  groupId: 3
 --- !u!65 &2103058248
 BoxCollider:
   m_ObjectHideFlags: 0

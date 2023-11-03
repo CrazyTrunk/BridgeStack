@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 public class Bot : Character
 {
-    private GameObject destination;
     [SerializeField] private NavMeshAgent agent;
     private IState currentState;
     private BotData botData;
@@ -57,6 +56,10 @@ public class Bot : Character
                     zone.IsSpawned = true;
                     BrickGenerators[botData.Zone].SpawnBricks();
                 }
+                else
+                {
+                    hasExitedDoor = false;
+                }
             }
         }
     }
@@ -72,11 +75,6 @@ public class Bot : Character
                 BrickGenerators[botData.Zone].MakeRemovedBrick(brick.brickNumber);
                 UpdateBotBrick(brick.color);
             }
-        }
-        else if (other.CompareTag(Tag.DOOR))
-        {
-            // Reset the flag when the bot enters a new door
-            hasExitedDoor = false;
         }
     }
     public void UpdateBotBrick(Color color)

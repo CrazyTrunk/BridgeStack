@@ -12,11 +12,8 @@ public class PlaceBrickOnBridgeState : IState
     }
     public void OnEnter()
     {
-        Debug.Log("Entered");
         bot.ChangeAnim("run");
         randomNumber = Random.Range(0, bot.currentZone.Bridges.Length - 1);
-        Debug.Log($"Entered random number {randomNumber}");
-
     }
     public void OnExecute()
     {
@@ -41,19 +38,21 @@ public class PlaceBrickOnBridgeState : IState
 
     private void GoToDoorOrDestination()
     {
-        GameObject go = bot.currentZone.Bridges[randomNumber];
-        Debug.Log($"Go {randomNumber}");
-        if (go != null)
+        if(bot.currentZone.Bridges != null && bot.currentZone.Bridges.Length > 0)
         {
-            GameObject doorObject = go.GetComponentsInChildren<Transform>()
-            .FirstOrDefault(child => child.CompareTag(Tag.DOOR)).gameObject;
-
-            if (doorObject != null)
+            GameObject go = bot.currentZone.Bridges[randomNumber];
+            if (go != null)
             {
-                bot.Agent.SetDestination(doorObject.transform.position);
-                if (Vector3.Distance(bot.Agent.transform.position, doorObject.transform.position) < 0.1f)
+                GameObject doorObject = go.GetComponentsInChildren<Transform>()
+                .FirstOrDefault(child => child.CompareTag(Tag.DOOR)).gameObject;
+
+                if (doorObject != null)
                 {
-                    bot.SetState(new PickUpBrickState(bot));
+                    bot.Agent.SetDestination(doorObject.transform.position);
+                    if (Vector3.Distance(bot.Agent.transform.position, doorObject.transform.position) < 0.1f)
+                    {
+                        bot.SetState(new PickUpBrickState(bot));
+                    }
                 }
             }
         }
@@ -65,6 +64,7 @@ public class PlaceBrickOnBridgeState : IState
                 bot.Agent.SetDestination(destination.transform.position);
             }
         }
+
     }
 
     public void OnExit()
