@@ -24,41 +24,40 @@ public class PlaceBrickOnBridgeState : IState
 
         if (bot.totalBrick > 0)
         {
-            GameObject go = null;
-            int randomBridges = Random.Range(0, bot.currentZone.Bridges.Length - 1);
-            if (bot.currentZone.Bridges.Length > 0 && bot.currentZone.Bridges != null)
-            {
-                go = bot.currentZone.Bridges[randomBridges];
-            }
-            if (go != null)
-            {
-                GameObject doorObject = go.GetComponentsInChildren<Transform>()
-                .FirstOrDefault(child => child.CompareTag("Door")).gameObject;
-
-                if (doorObject != null)
-                {
-                    bot.Agent.SetDestination(doorObject.transform.position);
-                    if (Vector3.Distance(bot.Agent.transform.position, doorObject.transform.position) < 0.1f)
-                    {
-                        bot.SetState(new PickUpBrickState(bot));
-                    }
-                }
-            }
-            else
-            {
-                Transform destination = bot.currentZone.GetComponentInChildren<Transform>();
-                if (destination != null)
-                {
-                    bot.Agent.SetDestination(destination.transform.position);
-                }
-            }
-
+            GoToDoorOrDestination();
         }
         else
         {
             RegenerateBrick(bot.BotData.Zone);
             bot.Agent.SetDestination(bot.currentZone.transform.position);
             bot.SetState(new PickUpBrickState(bot));
+        }
+    }
+
+    private void GoToDoorOrDestination()
+    {
+        GameObject go = bot.currentZone.Bridges?.ElementAtOrDefault(Random.Range(0, bot.currentZone.Bridges.Length - 1));
+        if (go != null)
+        {
+            GameObject doorObject = go.GetComponentsInChildren<Transform>()
+            .FirstOrDefault(child => child.CompareTag(Tag.DOOR)).gameObject;
+
+            if (doorObject != null)
+            {
+                bot.Agent.SetDestination(doorObject.transform.position);
+                if (Vector3.Distance(bot.Agent.transform.position, doorObject.transform.position) < 0.1f)
+                {
+                    bot.SetState(new PickUpBrickState(bot));
+                }
+            }
+        }
+        else
+        {
+            Transform destination = bot.currentZone.GetComponentInChildren<Transform>();
+            if (destination != null)
+            {
+                bot.Agent.SetDestination(destination.transform.position);
+            }
         }
     }
 

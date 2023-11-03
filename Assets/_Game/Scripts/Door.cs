@@ -10,7 +10,6 @@ public class Door : MonoBehaviour
 
     public void OpenDoor()
     {
-        Debug.Log("OpenDoor");
         transform.GetChild(0).GetComponent<MeshRenderer>().enabled = false;
         transform.gameObject.GetComponent<BoxCollider>().isTrigger = true;
         Obstacle.enabled = false;
@@ -18,8 +17,6 @@ public class Door : MonoBehaviour
     }
     public void CloseDoor()
     {
-        Debug.Log("CloseDoor");
-
         transform.GetChild(0).GetComponent<MeshRenderer>().enabled = true;
         transform.gameObject.GetComponent<BoxCollider>().isTrigger = false;
         Obstacle.enabled = true;
