@@ -47,4 +47,16 @@ public class Character : MonoBehaviour
         totalBrick--;
         Destroy(brickHolder.GetChild(brickHolder.childCount - 1).gameObject);
     }
+    protected virtual void AddBrick(Color brickcolor)
+    {
+        Transform brick = Instantiate(brickPrefab, brickHolder);
+        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
+        brick.localPosition = brickPosition;
+        brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
+        totalBrick++;
+    }
+    protected void RegenerateBrick(int zone, GameColor playerColor)
+    {
+        BrickGenerators[zone].RegenerateBricks(playerColor);
+    }
 }

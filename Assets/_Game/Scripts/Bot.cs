@@ -73,18 +73,15 @@ public class Bot : Character
             {
                 Destroy(other.gameObject);
                 BrickGenerators[botData.Zone].MakeRemovedBrick(brick.brickNumber);
-                UpdateBotBrick(brick.color);
+                AddBrick(brick.color);
             }
         }
     }
-    public void UpdateBotBrick(Color color)
+    protected override void AddBrick(Color color)
     {
-        Transform brick = Instantiate(brickPrefab, brickHolder);
-        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
-        brick.localPosition = brickPosition;
-        brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", color);
+        base.AddBrick(color);
         BotData.totalBrickCollected++;
-        totalBrick++;
+        Debug.Log($"Bot {BotData.totalBrickCollected}");
     }
     private void OnTriggerExit(Collider other)
     {

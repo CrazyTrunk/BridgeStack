@@ -10,8 +10,6 @@ public class PathWay : MonoBehaviour
     [SerializeField] private Door door;
     [SerializeField] public StairBrick[] stairBricks;
     [SerializeField] public int groupId;
-    public delegate void StairBrickChangedHandler(StairBrick brick);
-    public static event StairBrickChangedHandler OnStairBrickChanged;
     private void OnEnable()
     {
         StairBrick.OnStairBrickChanged += CheckAndOpenDoor;

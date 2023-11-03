@@ -25,6 +25,7 @@ public class LevelManager : Singleton<LevelManager>
         }
         currentLevel = Instantiate(levels[index - 1]);
         LoadPlayerResource();
+        LoadBotResources();
     }
     private void LoadPlayerResource()
     {
@@ -36,5 +37,15 @@ public class LevelManager : Singleton<LevelManager>
             playerDataSO.PlayerData.Position = currentLevel.SpawnPoint.position;
         }
         CameraFollow.Instance.Init();
+    }
+    private void LoadBotResources()
+    {
+        GameObject bot = Resources.Load<GameObject>($"Bot");
+        if (bot != null)
+        {
+            GameObject currentBot = Instantiate(bot);
+            currentBot.transform.position = currentLevel.SpawnPoint.position;
+            playerDataSO.PlayerData.Position = currentLevel.SpawnPoint.position;
+        }
     }
 }

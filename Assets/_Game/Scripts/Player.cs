@@ -1,10 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Xml.Serialization;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Player : Character
 {
@@ -59,7 +53,6 @@ public class Player : Character
     }
     private bool CheckBridgeStair()
     {
-
         if (inputManager.MovementAmount.y <= 0)
             return true;
         RaycastHit hit;
@@ -67,7 +60,7 @@ public class Player : Character
         {
             if (totalBrick == 0)
             {
-                RegenerateBrick(playerDataSO.PlayerData.Zone);
+                RegenerateBrick(playerDataSO.PlayerData.Zone, playerDataSO.PlayerData.playerColor);
             }
             StairBrick brick = hit.collider.gameObject.GetComponent<StairBrick>();
             if ((totalBrick > 0 && brick.colorName == GameColor.NoColor) || (totalBrick > 0 && brick.colorName != playerDataSO.PlayerData.playerColor))
@@ -88,11 +81,6 @@ public class Player : Character
 
         }
         return true;
-    }
-
-    private void RegenerateBrick(int zone)
-    {
-        BrickGenerators[zone].RegenerateBricks(playerDataSO.PlayerData.playerColor);
     }
 
     private void MovePlayer()
@@ -133,9 +121,14 @@ public class Player : Character
             {
                 Destroy(other.gameObject);
                 BrickGenerators[playerDataSO.PlayerData.Zone].MakeRemovedBrick(brick.brickNumber);
-                UpdatePlayerBrick(brick.color);
+                AddBrick(brick.color);
             }
         }
+    }
+    protected override void AddBrick(Color brickcolor)
+    {
+        base.AddBrick(brickcolor);
+        playerDataSO.PlayerData.totalBrickCollected++;
     }
     private void OnTriggerExit(Collider other)
     {
@@ -168,15 +161,7 @@ public class Player : Character
             hasExitedDoor = false;
         }
     }
-    private void UpdatePlayerBrick(Color brickcolor)
-    {
-        Transform brick = Instantiate(brickPrefab, brickHolder);
-        Vector3 brickPosition = new Vector3(0, 0 + (totalBrick * 0.2f), 0);
-        brick.localPosition = brickPosition;
-        playerDataSO.PlayerData.totalBrickCollected++;
-        brick.GetChild(0).GetComponent<MeshRenderer>().material.SetColor("_Color", brickcolor);
-        totalBrick++;
-    }
+
     private bool IsFacingWall(Vector3 direction)
     {
         RaycastHit hit;
