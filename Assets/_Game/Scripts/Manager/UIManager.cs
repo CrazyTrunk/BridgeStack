@@ -12,7 +12,6 @@ public class UIManager : Singleton<UIManager>
         finishMenu.SetActive(false);
     }
     public void OnButtonPlayClick() {
-        Debug.Log("wtf");
         mainMenu.SetActive(false);
         LevelManager.Instance.LoadLevel();
     }
