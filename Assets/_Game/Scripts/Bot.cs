@@ -20,6 +20,7 @@ public class Bot : Character
     {
         base.Start();
         Oninit();
+        agent.updateRotation = false;
         SetState(new PickUpBrickState(this));
     }
     private void Oninit()
@@ -33,6 +34,13 @@ public class Bot : Character
     private void Update()
     {
         currentState?.OnExecute();
+    }
+    private void LateUpdate()
+    {
+        if (agent.velocity.sqrMagnitude > Mathf.Epsilon)
+        {
+            transform.rotation = Quaternion.LookRotation(agent.velocity.normalized);
+        }
     }
     public void SetState(IState newState)
     {
@@ -81,7 +89,6 @@ public class Bot : Character
     {
         base.AddBrick(color);
         BotData.totalBrickCollected++;
-        Debug.Log($"Bot {BotData.totalBrickCollected}");
     }
     private void OnTriggerExit(Collider other)
     {
