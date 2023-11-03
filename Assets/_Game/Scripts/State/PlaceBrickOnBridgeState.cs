@@ -4,6 +4,7 @@ using UnityEngine;
 public class PlaceBrickOnBridgeState : IState
 {
     private Bot bot;
+    private int randomNumber;
     public PlaceBrickOnBridgeState(Bot bot)
     {
         this.bot = bot;
@@ -11,7 +12,11 @@ public class PlaceBrickOnBridgeState : IState
     }
     public void OnEnter()
     {
+        Debug.Log("Entered");
         bot.ChangeAnim("run");
+        randomNumber = Random.Range(0, bot.currentZone.Bridges.Length - 1);
+        Debug.Log($"Entered random number {randomNumber}");
+
     }
     public void OnExecute()
     {
@@ -36,7 +41,8 @@ public class PlaceBrickOnBridgeState : IState
 
     private void GoToDoorOrDestination()
     {
-        GameObject go = bot.currentZone.Bridges?.ElementAtOrDefault(Random.Range(0, bot.currentZone.Bridges.Length - 1));
+        GameObject go = bot.currentZone.Bridges[randomNumber];
+        Debug.Log($"Go {randomNumber}");
         if (go != null)
         {
             GameObject doorObject = go.GetComponentsInChildren<Transform>()
