@@ -20,7 +20,8 @@ public class FinishMenu : Menu<FinishMenu>
         {
             if (IsWinning.Value)
             {
-                
+                LevelManager.Instance.NextLevel();
+                Hide();
             }
             else
             {

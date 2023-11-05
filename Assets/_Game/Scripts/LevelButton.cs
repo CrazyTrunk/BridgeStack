@@ -14,7 +14,7 @@ public class LevelButton : MonoBehaviour
         textLevelButton.text = $"Level {id}";
         levelButton.onClick.AddListener(() =>
         {
-            LevelMenu.Instance.LoadLevel(id);
+            LevelManager.Instance.LoadLevel(id);
         });
     }
 }

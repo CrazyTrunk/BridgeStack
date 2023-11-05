@@ -27,9 +27,9 @@ public abstract class Menu<T> : MenuBase where T : Menu<T>
     {
         if (Instance == null)
         {
-#if UNITY_EDITOR
-            Debug.LogErrorFormat("Trying to close menu {0} but Instance is null", typeof(T));
-#endif
+//#if UNITY_EDITOR
+//            Debug.LogErrorFormat("Trying to close menu {0} but Instance is null", typeof(T));
+//#endif
             return;
         }
 

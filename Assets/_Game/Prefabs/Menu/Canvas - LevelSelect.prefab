@@ -360,9 +360,4 @@ MonoBehaviour:
   DestroyWhenClosed: 1
   DisableMenusUnderneath: 1
   Cancelable: 1
-  levels:
-  - {fileID: 6493998740807328259, guid: 6bf1262dfd040be45adcfc19ce7f7dde, type: 3}
-  - {fileID: 4982492900365280953, guid: 7ad72a27d946abb41a44e7db9223269b, type: 3}
-  buttonsParent: {fileID: 3038059606871049948}
-  buttonPrefab: {fileID: 977239903782202493, guid: b2a5dfc763f17f946b7276ae210c7d48, type: 3}
-  playerDataSO: {fileID: 11400000, guid: b82bba004ff971b47ba65f201988e407, type: 2}
+  parentButton: {fileID: 3038059606871049948}

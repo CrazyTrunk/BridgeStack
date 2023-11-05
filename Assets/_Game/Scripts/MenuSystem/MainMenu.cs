@@ -7,9 +7,7 @@ public class MainMenu : Menu<MainMenu>
     public void OnPlayButtonClick()
     {
         Hide();
-        LevelMenu.Show();
-        LevelMenu.Instance.LoadLevel();
-        LevelMenu.Hide();
+        LevelManager.Instance.LoadLevel();
         GameManager.Instance.ChangeState(GameState.Playing);
     }
     public void OnMenuLevelSelected()
