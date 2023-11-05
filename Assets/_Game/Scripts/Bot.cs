@@ -33,7 +33,10 @@ public class Bot : Character
     }
     private void Update()
     {
-        currentState?.OnExecute();
+        if (GameManager.Instance.IsState(GameState.Playing))
+        {
+            currentState?.OnExecute();
+        }
     }
     private void LateUpdate()
     {

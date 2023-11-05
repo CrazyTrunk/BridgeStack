@@ -9,4 +9,5 @@ public class PlayerData
     public GameColor playerColor;
     public int totalBrickCollected;
     public bool isBot = false;
+    public int currentLevel = 0;
 }

@@ -34,10 +34,13 @@ public class Player : Character
     }
     private void Update()
     {
-        if (inputManager.MovementAmount.x != 0 || inputManager.MovementAmount.y != 0)
-            MovePlayer();
-        else
-            ChangeAnim("idle");
+        if(GameManager.Instance.IsState(GameState.Playing))
+        {
+            if (inputManager.MovementAmount.x != 0 || inputManager.MovementAmount.y != 0)
+                MovePlayer();
+            else
+                ChangeAnim("idle");
+        }
     }
     private bool OnSlope()
     {

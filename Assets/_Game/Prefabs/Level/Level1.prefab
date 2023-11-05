@@ -8478,6 +8478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnPoint: {fileID: 3869572299714329993}
+  Id: 1
 --- !u!1 &7729616343524261343
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,30 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LevelManager : Singleton<LevelManager> 
+public class LevelMenu : Menu<LevelMenu>
 {
-    public List<Level> levels = new List<Level>();
+
+    [SerializeField] private List<Level> levels;
+    [SerializeField] public Transform buttonsParent;
+    [SerializeField] public LevelButton buttonPrefab;
     [SerializeField] PlayerDataSO playerDataSO;
     private int level = 1;
     Level currentLevel;
-
-    private void Start()
+    protected override void Awake()
     {
-        UIManager.Instance.ShowMenuUI();
+        base.Awake();
+        SpawnButtons();
     }
+    private void SpawnButtons()
+    {
+        foreach (var item in levels)
+        {
+            LevelButton levelButton = Instantiate(buttonPrefab, buttonsParent);
+            levelButton.name = $"Level {item.Id}";
+            levelButton.SetData(item.Id);
+        }
+    }
+
     public void LoadLevel()
     {
         LoadLevel(level);
     }
-    public void LoadLevel(int index)
+    public void LoadLevel(int level)
     {
         if (currentLevel != null)
         {
             Destroy(currentLevel.gameObject);
         }
-        currentLevel = Instantiate(levels[index - 1]);
+        currentLevel = Instantiate(levels.Find(x=>x.Id == level));
         LoadPlayerResource();
         LoadBotResources();
+        Hide();
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
     private void LoadPlayerResource()
     {
@@ -47,5 +62,14 @@ public class LevelManager : Singleton<LevelManager>
             currentBot.transform.position = currentLevel.SpawnPoint.position;
             playerDataSO.PlayerData.Position = currentLevel.SpawnPoint.position;
         }
+    }
+    public static void Show()
+    {
+        Open();
+    }
+
+    public static void Hide()
+    {
+        Close();
     }
 }

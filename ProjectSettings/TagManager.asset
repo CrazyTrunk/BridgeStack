@@ -12,6 +12,7 @@ TagManager:
   - PathWay
   - Door
   - Destination
+  - Bot
   layers:
   - Default
   - TransparentFX

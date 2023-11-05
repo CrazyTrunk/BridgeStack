@@ -10,7 +10,7 @@ public class Tag
     public const string GROUND = "Ground";
     public const string STAIR_BRICK = "StairBrick";
     public const string DOOR = "Door";
-    public const string DESTINATION = "Destination";
+    public const string PLAYER = "Player";
+    public const string BOT = "Bot";
     public const string WALL = "Wall";
-
 }
