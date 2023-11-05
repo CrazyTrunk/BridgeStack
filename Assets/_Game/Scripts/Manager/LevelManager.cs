@@ -29,15 +29,15 @@ public class LevelManager : Singleton<LevelManager>
     {
         if (currentLevel != null)
         {
-            Destroy(currentLevel.gameObject);
+            DestroyImmediate(currentLevel.gameObject);
         }
         if (currentPlayer != null)
         {
-            Destroy(currentPlayer);
+            DestroyImmediate(currentPlayer);
         }
         if (currentBot != null)
         {
-            Destroy(currentBot);
+            DestroyImmediate(currentBot);
         }
         currentLevel = Instantiate(levels.Find(x => x.Id == level));
         LoadPlayerResource();

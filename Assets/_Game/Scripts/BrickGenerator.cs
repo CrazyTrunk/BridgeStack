@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class BrickGenerator : MonoBehaviour
 {
-    [SerializeField]
-    private Transform BrickPrefab;
+    [SerializeField]private Transform BrickPrefab;
     [SerializeField] public List<BrickSpawnData> BrickSpawnDatas;
     //[SerializeField] public ColorDataSO colorDataSO;
     private int length = 48;// number of bricks

@@ -41,8 +41,6 @@ public class UIManager : MonoBehaviour
     public void OpenMenu(MenuBase instance)
     {
         // De-activate top menu
-        InputManager.Instance.gameObject.SetActive(false);
-
 
 
         if (menuStack.Count > 0)
@@ -107,10 +105,7 @@ public class UIManager : MonoBehaviour
         {
             topMenu = menuStack.Peek();
         }
-        else
-        {
-            InputManager.Instance.gameObject.SetActive(true);
-        }
+
 
         if (topMenu != null)
         {
