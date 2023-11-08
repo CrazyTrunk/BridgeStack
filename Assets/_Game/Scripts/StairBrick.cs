@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,7 @@ public class StairBrick : Brick
 {
     [SerializeField] public Renderer brickRenderer;
     [SerializeField] public int groupId;
-    public delegate void StairBrickChangedHandler(StairBrick brick);
-    public static event StairBrickChangedHandler OnStairBrickChanged;
+    public Action<StairBrick> OnStairBrickChanged;
     private void Start()
     {
         color = Color.white;

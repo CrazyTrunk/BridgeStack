@@ -12,12 +12,19 @@ public class PathWay : MonoBehaviour
     [SerializeField] public int groupId;
     private void OnEnable()
     {
-        StairBrick.OnStairBrickChanged += CheckAndOpenDoor;
+        foreach (var item in stairBricks)
+        {
+            item.OnStairBrickChanged += CheckAndOpenDoor;
+        }
     }
 
     private void OnDisable()
     {
-        StairBrick.OnStairBrickChanged -= CheckAndOpenDoor;
+        foreach (var item in stairBricks)
+        {
+            item.OnStairBrickChanged -= CheckAndOpenDoor;
+
+        }
     }
 
     private void CheckAndOpenDoor(StairBrick brick)
@@ -33,9 +40,9 @@ public class PathWay : MonoBehaviour
         {
             if (brick.colorName != color)
             {
-                return false; 
+                return false;
             }
         }
-        return true; 
+        return true;
     }
 }
